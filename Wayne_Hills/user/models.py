@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.core.validators import RegexValidator
 
 class UserType(models.Model):
     USER_CHOICES = (
@@ -41,6 +42,8 @@ class User(AbstractBaseUser):
         ("female", "여성"),
         ("undefined", "미선택"),
     )
+    phone_validator = RegexValidator(regex = r'^01([0|1|6|7|8|9]?)-?([0-9]{3,4})-?([0-9]{4})$')
+
 
     user_type = models.ForeignKey(UserType, on_delete=models.SET_NULL, null=True)
     
@@ -48,6 +51,7 @@ class User(AbstractBaseUser):
     password = models.CharField("비밀번호", max_length=128)
     gender = models.CharField("성별", max_length=20, choices=GENDER_CHOICES, default="undefined")
     age = models.IntegerField("나이", default=0)
+    phone = models.CharField("폰 번호", validators=[phone_validator], max_length=13, unique=True, null=True, blank=True)
     joined_date = models.DateTimeField("가입일", auto_now_add=True)
     
     def __str__(self):
