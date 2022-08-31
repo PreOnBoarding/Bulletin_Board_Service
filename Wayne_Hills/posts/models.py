@@ -18,7 +18,7 @@ class Post(models.Model):
     user = models.ForeignKey("user.User", verbose_name="작성자", on_delete=models.CASCADE)
     post_type = models.ForeignKey(PostType, verbose_name="게시판 타입", on_delete=models.CASCADE)
     title = models.CharField("제목", max_length=100)
-    content = models.TextField("내용")
+    content = models.TextField("내용", max_length=2000)
     created_at = models.DateTimeField("게시글 등록 일자", auto_now_add=True)
 
     def __str__(self):
