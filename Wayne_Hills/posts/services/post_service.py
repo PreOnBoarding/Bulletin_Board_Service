@@ -1,7 +1,7 @@
 from posts.serializers import PostSerializer
 from posts.models import Post as PostModel
 from .permissions import is_manager, is_general
-
+from user.models import User as UserModel
 NOTICE=1
 ADMIN=2
 GENERAL=3
@@ -55,12 +55,12 @@ def update_post(post_id : int, update_post_data: dict[str|str], user_type:int):
 
     update_post = PostModel.objects.get(id=post_id)
     post_type=update_post.post_type
-    if (post_type in [NOTICE,ADMIN] and is_manager(user_type)) or (post_type==GENERAL and is_general(user_type)):        
+    if (post_type in [NOTICE,ADMIN] and is_manager(user_type)) or (post_type==GENERAL and is_general(user_type)):
         update_post_serializer = PostSerializer(update_post, update_post_data, partial=True)
         update_post_serializer.is_valid(raise_exception=True)
         update_post_serializer.save()
 
-def delete_post(post_id : int, user)-> None:
+def delete_post(post_id : int, user:UserModel)-> None:
     """
     모든게시판의 Delete를 담당하는 Service
     Args :
