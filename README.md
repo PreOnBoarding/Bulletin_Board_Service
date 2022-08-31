@@ -1,6 +1,11 @@
-# Wayne_Hills_Ventures
-웨인힐스벤처스 기업과제
+# Wayne_Hills_Ventures 기업과제
 
+## 👨‍👩‍👧 작업 구성원
+- 고현우
+- 김동우
+- 윤슬기
+- 한예슬
+- 정대근
 
 ## 👉 ERD <br><br>
 ![image](https://user-images.githubusercontent.com/101394490/187585268-5b84d112-e87f-4647-a5ee-b8704b7d6cd0.png)
