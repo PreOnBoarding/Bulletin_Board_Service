@@ -23,8 +23,8 @@ class IsAdminOrReadOnly(BasePermission):
 
 class IsAuthenticatedOrReadOnly(BasePermission):
     """
-    #자유게시판 get/post
-    조회: 모두 가능, 작성: 가입된 사람만
+    자유게시판 get/post 메소드
+    조회: 모두 가능, 작성&수정&삭제: 가입된 사람만
     """
     SAFE_METHODS = ('GET', )
 
@@ -40,10 +40,10 @@ class IsAuthenticatedOrReadOnly(BasePermission):
 
 class IsAdminOrIsAthenticatedPutOnly(BasePermission):
     """
-    #자유게시판 put/delete
-    수정: 가입된 사람만, 삭제: 가입된 사람 및 운영자
+    자유게시판 put/delete 메소드 
+    조회&작성&수정: 가입된 사람만, 삭제: 가입된 사람 및 운영자
     """
-    SAFE_METHODS = ('PUT', )
+    SAFE_METHODS = ('GET', 'POST', 'PUT', )
 
     def has_permission(self, request, view):
         user = request.user
