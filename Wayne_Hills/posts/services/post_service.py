@@ -50,3 +50,14 @@ def update_geneal_post(general_post_id : int, update_general_post_data: dict[str
     update_general_post_serializer = GeneralPostSerializer(update_post, update_general_post_data, partial=True)
     update_general_post_serializer.is_valid(raise_exception=True)
     update_general_post_serializer.save()
+
+def delete_geneal_post(general_post_id : int)-> None:
+    """
+    자유게시판의 Delete를 담당하는 Service
+    Args :
+        "general_post_id" (int): posts.Post 외래키, url에 담아서 보내줌"
+    Return :
+        None
+    """
+    delete_post = PostModel.objects.get(id=general_post_id)
+    delete_post.delete()

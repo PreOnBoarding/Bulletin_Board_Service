@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from posts.services.post_service import (
     create_general_post,
     get_general_post,
-    update_geneal_post
+    update_geneal_post,
+    delete_geneal_post
 )
 
 # Create your views here.
@@ -25,4 +26,10 @@ class GeneralPostView(APIView):
     def put(self,request, general_post_id):
         update_geneal_post(general_post_id, request.data)
         return Response({"detail" : "자유게시판의 글이 수정되었습니다"}, status=status.HTTP_200_OK)
+
+    def delete(self,request, general_post_id):
+        delete_geneal_post(general_post_id)
+        return Response({"detail" : "자유게시판의 글이 삭제되었습니다"}, status=status.HTTP_200_OK)
+
+
 
