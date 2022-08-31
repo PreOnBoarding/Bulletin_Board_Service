@@ -1,3 +1,18 @@
 from django.shortcuts import render
+from rest_framework import permissions, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-# Create your views here.
+from user.Service.user_service import user_get_service
+
+# 유저 CRUD 기능
+class UserView(APIView):
+    permission_classes = [permissions.AllowAny]
+
+    # 유저 조회 기능
+    def get(self, request, username):
+        res = user_get_service(username)
+
+
+
+        return Response({"username": username, "res": res})
