@@ -1,3 +1,10 @@
 from django.contrib import admin
+from .models import (
+    PostType,
+    Post,
+    PostUpdatedLog
+)
 
-# Register your models here.
+admin.site.register(PostType)
+admin.site.register(Post)
+admin.site.register(PostUpdatedLog)
