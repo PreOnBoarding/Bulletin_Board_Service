@@ -10,7 +10,9 @@ class GenericAPIException(APIException):
 
 class IsAdminOrReadOnly(BasePermission):
     """
-    admin 사용자는 모두 가능, 조회는 모두 가능
+    admin 사용자: CRUD 모든 기능 허용
+    로그인하지 않은 사용자: Read 기능만 허용
+    
     """
     SAFE_METHODS = ('GET', )
 
@@ -20,39 +22,5 @@ class IsAdminOrReadOnly(BasePermission):
             response ={"detail": "서비스를 이용하기 위해 로그인 해주세요."}
             raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
         return bool(self.SAFE_METHODS or (user.is_authenticated and user.is_admin))
-
-class IsAuthenticatedOrReadOnly(BasePermission):
-    """
-    자유게시판 get/post 메소드
-    조회: 모두 가능, 작성&수정&삭제: 가입된 사람만
-    """
-    SAFE_METHODS = ('GET', )
-
-    def has_permission(self, request, view):
-        user = request.user
-
-        if not self.SAFE_METHODS and not user.is_authenticated:
-            response ={"detail": "서비스를 이용하기 위해 로그인 해주세요."}
-            raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
-
-        return bool(self.SAFE_METHODS or user.is_authenticated)
-
-
-class IsAdminOrIsAthenticatedPutOnly(BasePermission):
-    """
-    자유게시판 put/delete 메소드 
-    조회&작성&수정: 가입된 사람만, 삭제: 가입된 사람 및 운영자
-    """
-    SAFE_METHODS = ('GET', 'POST', 'PUT', )
-
-    def has_permission(self, request, view):
-        user = request.user
-        if not user.is_authenticated:
-            response ={"detail": "서비스를 이용하기 위해 로그인 해주세요."}
-            raise GenericAPIException(status_code=status.HTTP_401_UNAUTHORIZED, detail=response)
-
-        return bool(self.SAFE_METHODS or (user.is_authenticated and user.is_admin))
-
-
 
 
