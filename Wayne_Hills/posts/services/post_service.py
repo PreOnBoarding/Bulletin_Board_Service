@@ -1,19 +1,18 @@
-from functools import partial
-from posts.serializers import GeneralPostSerializer
+from posts.serializers import PostSerializer
 
 from posts.models import Post as PostModel
 
 
-def get_general_post() -> GeneralPostSerializer:
+def get_general_post() -> PostSerializer:
     """
     자유게시판의 Read를 담당하는 Service
     Args :
         None
     Return :
-        GeneralPostSerializer
+        PostSerializer
     """
     general_posts = PostModel.objects.filter(post_type=3)
-    general_posts_serializer = GeneralPostSerializer(general_posts, many=True).data
+    general_posts_serializer = PostSerializer(general_posts, many=True).data
     return general_posts_serializer
 
 
@@ -30,7 +29,7 @@ def create_general_post(create_general_post_data:dict[str|str]) -> None:
     Return :
         None
     """
-    general_post_serializer = GeneralPostSerializer(data = create_general_post_data)
+    general_post_serializer = PostSerializer(data = create_general_post_data)
     general_post_serializer.is_valid(raise_exception=True)
     general_post_serializer.save()
 
@@ -47,7 +46,7 @@ def update_geneal_post(general_post_id : int, update_general_post_data: dict[str
         None
     """
     update_post = PostModel.objects.get(id=general_post_id)
-    update_general_post_serializer = GeneralPostSerializer(update_post, update_general_post_data, partial=True)
+    update_general_post_serializer = PostSerializer(update_post, update_general_post_data, partial=True)
     update_general_post_serializer.is_valid(raise_exception=True)
     update_general_post_serializer.save()
 
@@ -61,3 +60,37 @@ def delete_geneal_post(general_post_id : int)-> None:
     """
     delete_post = PostModel.objects.get(id=general_post_id)
     delete_post.delete()
+
+def create_notice_post(create_notice_post_data:dict[str|str]) -> None:
+    """
+    공지사항의 Create를 담당하는 Service
+    Args :
+        create_notice_post_data ={
+            "user" (User): user.User 외래키 (User.Usertype이 1고정),
+            "post_type" (PostType) : posts.PostType 외래키(공지사항은 1 고정),
+            "title" (str): 게시글의 제목,
+            "content" (str) : 게시글의 내용
+        }
+    Return :
+        None
+    """
+    notice_post_serializer = PostSerializer(data = create_notice_post_data)
+    notice_post_serializer.is_valid(raise_exception=True)
+    notice_post_serializer.save()
+
+def create_admin_post(create_admin_post_data:dict[str|str]) -> None:
+    """
+    운영게시판의 Create를 담당하는 Service
+    Args :
+        create_admin_post_data ={
+            "user" (User): user.User 외래키 (User.Usertype이 1고정),
+            "post_type" (PostType) : posts.PostType 외래키(공지사항은 1 고정),
+            "title" (str): 게시글의 제목,
+            "content" (str) : 게시글의 내용
+        }
+    Return :
+        None
+    """
+    admin_post_serializer = PostSerializer(data = create_admin_post_data)
+    admin_post_serializer.is_valid(raise_exception=True)
+    admin_post_serializer.save()
