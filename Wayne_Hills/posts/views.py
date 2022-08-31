@@ -8,9 +8,8 @@ from posts.services.post_service import (
     update_post,
     delete_post,
 )
-POST_TYPE_LIST = ["", "공지사항", "운영게시판", "자유게시판"]
 
-# Create your views here.
+POST_TYPE_LIST = ["", "공지사항", "운영게시판", "자유게시판"]
 
 class PostView(APIView):
     """
@@ -23,11 +22,11 @@ class PostView(APIView):
 
     def post(self, request, post_type):
         create_post(request.data, post_type)    
-        return Response({"detail" : POST_TYPE_LIST[post_type] + "에 게시물을 작성했습니다."}, status=status.HTTP_200_OK)
+        return Response({"detail" : POST_TYPE_LIST[post_type] + "에 게시물을 작성했습니다."}, status=status.HTTP_201_CREATED)
 
     def put(self,request, post_id):
         update_post(post_id, request.data)
-        return Response({"detail" : "게시판의 글이 수정되었습니다"}, status=status.HTTP_200_OK)
+        return Response({"detail" : "게시판의 글이 수정되었습니다"}, status=status.HTTP_201_CREATED)
 
     def delete(self,request, post_id):
         delete_post(post_id)

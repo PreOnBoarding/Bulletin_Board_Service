@@ -1,5 +1,4 @@
 from posts.serializers import PostSerializer
-
 from posts.models import Post as PostModel
 
 
@@ -14,7 +13,6 @@ def get_post(post_type) -> PostSerializer:
     get_posts = PostModel.objects.filter(post_type=post_type)
     get_posts_serializer = PostSerializer(get_posts, many=True).data
     return get_posts_serializer
-
 
 def create_post(create_post_data:dict[str|str], post_type : int) -> None:
     """
@@ -54,7 +52,7 @@ def delete_post(post_id : int)-> None:
     """
     모든게시판의 Delete를 담당하는 Service
     Args :
-        "post_id" (int): posts.Post 외래키, url에 담아서 보내줌"
+        "post_id" (int): posts.Post 외래키, url에 담아서 보내줌
     Return :
         None
     """
