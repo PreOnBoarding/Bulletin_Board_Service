@@ -1,12 +1,12 @@
 from user.models import User, UserType
 from user.serializers import UserSerializer
 
-def user_get_service(username:str) -> dict:
+def user_get_service(username: int):
     """ 
         사용자이름에 해당하는 유저 정보 반환 함수
 
     Args:
-        username (string): 사용자이름 
+        username (str): 사용자이름 
 
     Returns:
         user_info (dict) : 유저 정보
@@ -23,7 +23,7 @@ def user_get_service(username:str) -> dict:
     return user_info
 
 
-def user_post_service(user_info):
+def user_post_service(user_info: dict):
     """ 
         사용자정보로 회원가입하는 함수
 
