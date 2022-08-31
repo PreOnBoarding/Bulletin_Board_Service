@@ -3,6 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.GeneralPostView.as_view()),
-    path("<int:general_post_id>", views.GeneralPostView.as_view()),
+    path("<int:post_type>", views.PostView.as_view()),
+    path("edit/<int:post_id>", views.PostView.as_view()),
 ]
