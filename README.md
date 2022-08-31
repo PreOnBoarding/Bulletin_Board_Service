@@ -8,7 +8,7 @@
 - 정대근
 
 ## 👉 ERD <br><br>
-![image](https://user-images.githubusercontent.com/101394490/187585268-5b84d112-e87f-4647-a5ee-b8704b7d6cd0.png)
+![image](https://user-images.githubusercontent.com/68724828/187600194-20c59363-a958-4d1d-9a7f-fbf40075da14.png)
 
 ## 📌 컨벤션
 ### ❓ Commit Message
