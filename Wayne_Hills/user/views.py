@@ -26,10 +26,8 @@ class UserView(APIView):
     # 회원가입 기능
     def post(self, request):
         result, result_detail = user_post_service(request.data)
-            
         if result:
             return Response({"detail": "회원가입 성공"}, status=status.HTTP_200_OK)
-
         return Response(result_detail, status=status.HTTP_400_BAD_REQUEST)
 
 class TokenObtainPairView(TokenObtainPairView):
@@ -42,5 +40,5 @@ class TokenObtainPairView(TokenObtainPairView):
 class GenderStatisticsView(APIView):
 
     def get(self, request):
-        male_count,female_count = get_gender_statistics()
-        return Response({"male_count" : male_count, "female_count" : female_count}, status=status.HTTP_200_OK)
+        male_count, female_count = get_gender_statistics()
+        return Response({"male_count": male_count, "female_count": female_count}, status=status.HTTP_200_OK)
