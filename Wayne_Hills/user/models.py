@@ -36,7 +36,7 @@ class UserManager(BaseUserManager):
         user =  self.model(
             username=username,
             gender="undefined"
-        )
+        ) 
         user.set_password(password)
         user.is_admin = True
         user.save(using=self._db)
