@@ -1,6 +1,6 @@
 from django.urls import path, include
-from .views import UserView
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from .views import UserView, TokenObtainPairView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 # user/
 urlpatterns = [
