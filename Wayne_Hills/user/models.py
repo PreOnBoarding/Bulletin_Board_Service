@@ -18,7 +18,7 @@ class UserLog(models.Model):
     login_date = models.DateTimeField("로그인", auto_now_add=True)
 
     def __str__(self):
-        return self.user
+        return f"{self.user.username} 's log -  {str(self.login_date)[:19]}"
 
 class UserManager(BaseUserManager):
     def create_user(self, username, password=None):
