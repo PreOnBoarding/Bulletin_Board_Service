@@ -21,10 +21,10 @@ def get_post(post_type:int, user_type:int) -> PostSerializer:
     if (post_type==ADMIN and is_manager(user_type)) or post_type in [NOTICE,GENERAL]:
         get_posts = PostModel.objects.filter(post_type=post_type)
         get_posts_serializer = PostSerializer(get_posts, many=True).data
-        return get_posts_serializer
+        return get_posts_serializer or {"detail": "게시글이 없습니다"}
 
 
-def create_post(create_post_data:dict[str|str], post_type : int, user_type:int) -> None:
+def create_post(create_post_data:dict[str|str], post_type : int, user_type:int) -> bool:
     """
     Post의 Create를 담당하는 Service
     Args :
@@ -36,11 +36,12 @@ def create_post(create_post_data:dict[str|str], post_type : int, user_type:int) 
     Return :
         None
     """
-    if (post_type in [NOTICE,ADMIN] and is_manager(user_type)) or (post_type==GENERAL and is_general(user_type)):
+    if is_manager(user_type) or (post_type==GENERAL and is_general(user_type)):
         create_post_data["post_type"] = post_type
         post_serializer = PostSerializer(data = create_post_data)
         post_serializer.is_valid(raise_exception=True)
         post_serializer.save()
+        return True
 
 def update_post(post_id : int, update_post_data: dict[str|str], user_type:int):
     """
@@ -57,12 +58,13 @@ def update_post(post_id : int, update_post_data: dict[str|str], user_type:int):
 
     update_post = PostModel.objects.get(id=post_id)
     post_type=update_post.post_type
-    if (post_type in [NOTICE,ADMIN] and is_manager(user_type)) or (post_type==GENERAL and is_general(user_type)):
+    if is_manager(user_type) or (post_type==GENERAL and is_general(user_type)):
         update_post_serializer = PostSerializer(update_post, update_post_data, partial=True)
         update_post_serializer.is_valid(raise_exception=True)
         update_post_serializer.save()
+        return update_post_serializer.data
 
-def delete_post(post_id : int, user:UserModel)-> None:
+def delete_post(post_id : int, user:UserModel)-> bool:
     """
     모든게시판의 Delete를 담당하는 Service
     Args :
@@ -72,5 +74,6 @@ def delete_post(post_id : int, user:UserModel)-> None:
     """
     user_type = user.user_type_id
     delete_post = PostModel.objects.get(id=post_id)
-    if user_type==1 or user_type==2 and delete_post.user==user:
+    if user_type==1 or (user_type==2 and delete_post.user==user):
         delete_post.delete()
+        return True
