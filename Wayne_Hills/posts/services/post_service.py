@@ -27,7 +27,8 @@ def get_post(post_type:int, user_type:int) -> PostSerializer:
 
 
 def create_post(create_post_data:dict[str|str], post_type : int, user_type:int) -> bool:
-    """Post의 Create를 담당하는 Service
+    """
+    Post의 Create를 담당하는 Service
     Args :
         create_post_data ={
             "user" (User): user.User 외래키,
@@ -43,6 +44,7 @@ def create_post(create_post_data:dict[str|str], post_type : int, user_type:int) 
         post_serializer.is_valid(raise_exception=True)
         post_serializer.save()
         return True
+    return False
 
 def update_post(post_id : int, update_post_data: dict[str|str], user_type:int)-> PostSerializer:
     """
@@ -78,3 +80,4 @@ def delete_post(post_id : int, user:UserModel)-> bool:
     if user_type==1 or (user_type==2 and delete_post.user==user):
         delete_post.delete()
         return True
+    return False
