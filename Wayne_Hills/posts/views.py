@@ -7,18 +7,18 @@ from posts.services.post_service import (
     get_post,
     update_post,
     delete_post,
-    is_manager,
 )
 from user.models import User
 POST_TYPE_LIST = ["", "공지사항", "운영게시판", "자유게시판"]
 
-# Create your views here.
+
 
 
 class PostView(APIView):
     """
     모든게시판의 CRUD를 담당하는 View
     """
+
 
     def get(self, request, post_type):
         user_type = request.user.user_type_id  

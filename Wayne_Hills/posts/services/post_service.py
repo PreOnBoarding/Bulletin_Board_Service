@@ -10,12 +10,14 @@ GENERAL=3
 
 def get_post(post_type:int, user_type:int) -> PostSerializer:
     """
+
     모든게시판의 Read를 담당하는 Service
     Args :
         "post_type" : posts.PostType 외래키 (urls에서 받아옴 1=공지, 2=운영, 3=자유)
     Return :
-        PostSerializer
+
     """
+
     if (post_type==ADMIN and is_manager(user_type)) or post_type in [NOTICE,GENERAL]:
         get_posts = PostModel.objects.filter(post_type=post_type)
     get_posts_serializer = PostSerializer(get_posts, many=True).data
