@@ -20,8 +20,8 @@ def get_post(post_type:int, user_type:int) -> PostSerializer:
 
     if (post_type==ADMIN and is_manager(user_type)) or post_type in [NOTICE,GENERAL]:
         get_posts = PostModel.objects.filter(post_type=post_type)
-    get_posts_serializer = PostSerializer(get_posts, many=True).data
-    return get_posts_serializer
+        get_posts_serializer = PostSerializer(get_posts, many=True).data
+        return get_posts_serializer
 
 
 def create_post(create_post_data:dict[str|str], post_type : int, user_type:int) -> None:

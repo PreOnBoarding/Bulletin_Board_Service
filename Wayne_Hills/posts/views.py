@@ -22,7 +22,9 @@ class PostView(APIView):
     def get(self, request, post_type):
         user_type = request.user.user_type_id  
         get_posts_serializer = get_post(post_type, user_type)
-        return Response(get_posts_serializer, status=status.HTTP_200_OK)
+        if get_posts_serializer:
+            return Response(get_posts_serializer, status=status.HTTP_200_OK)
+        return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, post_type):
         user_type = request.user.user_type_id

@@ -16,8 +16,8 @@ class UserView(APIView):
     def get(self, request, username):
         res = user_get_service(username)
 
-
         return Response({"username": username, "res": res}, status=status.HTTP_200_OK)
+        # return Response({"res": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
 
     # 회원가입 기능
     def post(self, request):
