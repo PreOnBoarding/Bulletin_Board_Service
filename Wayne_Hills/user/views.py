@@ -21,8 +21,6 @@ class UserView(APIView):
     # 유저 조회 기능
     def get(self, request, username):
         res = user_get_service(username)
-
-
         return Response({"username": username, "res": res}, status=status.HTTP_200_OK)
 
     # 회원가입 기능
