@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -9,11 +8,13 @@ from user.serializers_jwt import TokenObtainPairSerializer
 from user.Service.user_service import (
     user_get_service,
     user_post_service,
-    create_user_log,
     )
 
 # 유저 CRUD 기능
 class UserView(APIView):
+    """
+    User의 CRUD를 담당하는 View
+    """
     permission_classes = [permissions.AllowAny]
 
     # 유저 조회 기능
@@ -33,10 +34,9 @@ class UserView(APIView):
         return Response(result_detail, status=status.HTTP_400_BAD_REQUEST)
 
 class TokenObtainPairView(TokenObtainPairView):
+    """
+    Login을 구현하는 View
+    내부에서 UserLog를 생성하는 함수 내장
+    """
     serializer_class = TokenObtainPairSerializer
     
-class UserLogView(APIView):
-
-    def post(self, request):
-        create_user_log()
-        return True

@@ -52,6 +52,13 @@ def user_post_service(user_info: dict):
 
 
 def create_user_log(user):
+    """
+        로그인이 되었을 때 자동으로 UserLog를 생성해주는 함수
+    Args:
+        user (User): serializers_jwt.py에서 받아오는 user
+    Return :
+        None
+    """
     request_data = {"user" : user.id}
     user_log_serializer = UserLogSerializer(data=request_data)
     user_log_serializer.is_valid(raise_exception=True)
