@@ -1,14 +1,15 @@
 # Wayne_Hills_Ventures 기업과제
 
 ## 👨‍👩‍👧 작업 구성원
-- 고현우
-- 김동우
-- 윤슬기
+- [고현우](https://khw7876.tistory.com/)
+- [김동우](https://velog.io/@kimphysicsman)
+- [윤슬기](https://nicesugi.tistory.com/)
 - [한예슬](https://velog.io/@tasha_han_1234)
-- 정대근
+</br>
 
-## 👉 ERD <br><br>
-![image](https://user-images.githubusercontent.com/68724828/187600194-20c59363-a958-4d1d-9a7f-fbf40075da14.png)
+## 👉 ERD
+<img width="785" alt="스크린샷 2022-09-01 오후 10 44 18" src="https://user-images.githubusercontent.com/104303285/187929462-fdf80dd7-388c-414d-9b85-7a5371704ab1.png">
+</br>
 
 ## 📌 컨벤션
 ### ❓ Commit Message
