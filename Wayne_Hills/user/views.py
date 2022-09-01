@@ -2,10 +2,14 @@ from django.shortcuts import render
 from rest_framework import permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+from user.serializers_jwt import TokenObtainPairSerializer
 
 from user.Service.user_service import (
     user_get_service,
     user_post_service,
+    create_user_log,
     )
 
 # 유저 CRUD 기능
@@ -27,3 +31,12 @@ class UserView(APIView):
             return Response({"detail": "회원가입 성공"}, status=status.HTTP_200_OK)
 
         return Response(result_detail, status=status.HTTP_400_BAD_REQUEST)
+
+class TokenObtainPairView(TokenObtainPairView):
+    serializer_class = TokenObtainPairSerializer
+    
+class UserLogView(APIView):
+
+    def post(self, request):
+        create_user_log()
+        return True

@@ -1,5 +1,5 @@
 from user.models import User, UserType
-from user.serializers import UserSerializer
+from user.serializers import UserSerializer, UserLogSerializer
 
 def user_get_service(username: int):
     """ 
@@ -49,3 +49,10 @@ def user_post_service(user_info: dict):
         user_serializer.save(user_type=user_type_obj)
         return True, None
     return False, user_serializer.errors
+
+
+def create_user_log(user):
+    request_data = {"user" : user.id}
+    user_log_serializer = UserLogSerializer(data=request_data)
+    user_log_serializer.is_valid(raise_exception=True)
+    user_log_serializer.save()
