@@ -44,5 +44,5 @@ class TokenObtainPairView(TokenObtainPairView):
 class GenderStatisticsView(APIView):
 
     def get(self, request):
-        gender_statistics_serializer = get_gender_statistics()
-        return Response(gender_statistics_serializer, status=status.HTTP_200_OK)
+        male_count,female_count = get_gender_statistics()
+        return Response({"male_count" : male_count, "female_count" : female_count}, status=status.HTTP_200_OK)

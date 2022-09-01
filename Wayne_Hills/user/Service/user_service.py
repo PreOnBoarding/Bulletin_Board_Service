@@ -1,5 +1,5 @@
 from user.models import User, UserType, UserLog
-from user.serializers import UserSerializer, UserLogSerializer, GenderStatisticsSerializer
+from user.serializers import UserSerializer, UserLogSerializer
 
 def user_get_service(username: int):
     """ 
