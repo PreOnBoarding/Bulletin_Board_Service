@@ -13,6 +13,13 @@ class UserTypeSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     user_type = serializers.SerializerMethodField()
 
+    def create(self, *args, **kwargs):
+        user = super().create(*args, **kwargs)
+        p = user.password
+        user.set_password(p)
+        user.save()
+        return user
+
     def get_user_type(self, obj):
         if obj.user_type:
             return obj.user_type
