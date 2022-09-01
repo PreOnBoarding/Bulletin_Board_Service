@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 
-from .models import User, UserType
+from .models import User, UserType, UserLog
 
 
 class UserTypeSerializer(serializers.ModelSerializer):
@@ -9,6 +9,10 @@ class UserTypeSerializer(serializers.ModelSerializer):
         model = UserType
         fields = ["user_type"]
 
+class UserLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserLog
+        fields = ["user", "login_date"]
 
 class UserSerializer(serializers.ModelSerializer):
     user_type = serializers.SerializerMethodField()
@@ -35,3 +39,4 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
+

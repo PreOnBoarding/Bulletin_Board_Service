@@ -13,6 +13,13 @@ class UserType(models.Model):
     def __str__(self):
         return self.user_type
 
+class UserLog(models.Model):
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
+    login_date = models.DateTimeField("로그인", auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} 's log -  {str(self.login_date)[:19]}"
+
 class UserManager(BaseUserManager):
     def create_user(self, username, password=None):
         if not username:
@@ -29,7 +36,7 @@ class UserManager(BaseUserManager):
         user =  self.model(
             username=username,
             gender="undefined"
-        )
+        ) 
         user.set_password(password)
         user.is_admin = True
         user.save(using=self._db)
