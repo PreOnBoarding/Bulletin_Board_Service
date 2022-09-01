@@ -64,7 +64,7 @@ def delete_post(post_id : int, user)-> None:
     """
     모든게시판의 Delete를 담당하는 Service
     Args :
-        "post_id" (int): posts.Post 외래키, url에 담아서 보내줌"
+        "post_id" (int): posts.Post 외래키, url에 담아서 보내줌
     Return :
         None
     """
