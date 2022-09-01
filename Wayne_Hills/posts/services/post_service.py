@@ -15,6 +15,8 @@ def get_post(post_type:int, user_type:int) -> PostSerializer:
     Args :
         "post_type" : posts.PostType 외래키 (urls에서 받아옴 1=공지, 2=운영, 3=자유)
     Return :
+        성공시: PostSerializer
+        실패시: {"detail": "Error message"}
 
     """
 
@@ -25,8 +27,7 @@ def get_post(post_type:int, user_type:int) -> PostSerializer:
 
 
 def create_post(create_post_data:dict[str|str], post_type : int, user_type:int) -> bool:
-    """
-    Post의 Create를 담당하는 Service
+    """Post의 Create를 담당하는 Service
     Args :
         create_post_data ={
             "user" (User): user.User 외래키,
@@ -34,7 +35,7 @@ def create_post(create_post_data:dict[str|str], post_type : int, user_type:int) 
             "content" (str) : 게시글의 내용
         }
     Return :
-        None
+        bool
     """
     if is_manager(user_type) or (post_type==GENERAL and is_general(user_type)):
         create_post_data["post_type"] = post_type
@@ -43,7 +44,7 @@ def create_post(create_post_data:dict[str|str], post_type : int, user_type:int) 
         post_serializer.save()
         return True
 
-def update_post(post_id : int, update_post_data: dict[str|str], user_type:int):
+def update_post(post_id : int, update_post_data: dict[str|str], user_type:int)-> PostSerializer:
     """
     모든게시판의 Update를 담당하는 Service
     Args :
@@ -53,7 +54,7 @@ def update_post(post_id : int, update_post_data: dict[str|str], user_type:int):
             "content" (str) : 게시글의 내용
         }
     Return :
-        None
+        PostSerializer
     """
 
     update_post = PostModel.objects.get(id=post_id)
@@ -70,7 +71,7 @@ def delete_post(post_id : int, user:UserModel)-> bool:
     Args :
         "post_id" (int): posts.Post 외래키, url에 담아서 보내줌
     Return :
-        None
+        bool
     """
     user_type = user.user_type_id
     delete_post = PostModel.objects.get(id=post_id)
