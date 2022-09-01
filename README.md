@@ -4,7 +4,7 @@
 - 고현우
 - 김동우
 - 윤슬기
-- 한예슬
+- [한예슬](https://velog.io/@tasha_han_1234)
 - 정대근
 
 ## 👉 ERD <br><br>
