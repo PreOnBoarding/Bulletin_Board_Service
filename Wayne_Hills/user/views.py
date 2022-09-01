@@ -8,6 +8,7 @@ from user.serializers_jwt import TokenObtainPairSerializer
 from user.Service.user_service import (
     user_get_service,
     user_post_service,
+    get_gender_statistics,
     )
 
 # 유저 CRUD 기능
@@ -40,3 +41,8 @@ class TokenObtainPairView(TokenObtainPairView):
     """
     serializer_class = TokenObtainPairSerializer
     
+class GenderStatisticsView(APIView):
+
+    def get(self, request):
+        gender_statistics_serializer = get_gender_statistics()
+        return Response(gender_statistics_serializer, status=status.HTTP_200_OK)
