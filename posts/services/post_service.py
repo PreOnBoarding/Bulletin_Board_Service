@@ -27,7 +27,6 @@ def check_get_post(post_type : int, user : UserModel) -> bool:
     Args:
         post_type (int): posts.PostType 외래키 (urls에서 받아옴 1=공지, 2=운영, 3=자유)
         user (UserModel): user.User 외래키 (request.user를 통해 로그인한 유저 반환)
-
     Returns:
         bool
     """
@@ -63,7 +62,6 @@ def check_can_create_post(user : UserModel, post_type : int) -> bool:
     Args:
         user (UserModel): user.User 외래키 (request.user를 통해 로그인한 유저 반환)
         post_type (int): posts.PostType 외래키 (urls에서 받아옴 1=공지, 2=운영, 3=자유)
-
     Returns:
         bool
     """

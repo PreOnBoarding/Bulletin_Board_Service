@@ -27,7 +27,7 @@ class PostView(APIView):
 
     def post(self, request, post_type):
         if check_can_create_post(request.user, post_type):
-            create_post(request.data, post_type, request.user)
+            create_post(request.data, post_type)
             return Response({"detail" : POST_TYPE_LIST[post_type] + "에 게시물을 작성했습니다."}, status=status.HTTP_200_OK)
         return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
 
