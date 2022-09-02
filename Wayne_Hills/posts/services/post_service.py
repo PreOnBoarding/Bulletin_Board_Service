@@ -31,26 +31,27 @@ def check_get_post(post_type : int, user : UserModel) -> bool:
     Returns:
         bool
     """
-    user_type = user.user_type_id  
+    user_type = user.user_type.user_type
     if (post_type==ADMIN and is_manager(user_type)) or post_type in [NOTICE,GENERAL]:
         return True
     return False
 
 
-def create_post(create_post_data : Dict[str, Union[UserModel, str]], post_type : int) -> None:
+def create_post(create_post_data : Dict[str, str], post_type : int, user : UserModel) -> None:
     """
     Post의 Create를 담당하는 Service
     Args :
         create_post_data (dict) : {
-            "user" (User): user.User 외래키,
             "title" (str): 게시글의 제목,
             "content" (str) : 게시글의 내용
         },
         post_type (int): posts.PostType 외래키 (urls에서 받아옴 1=공지, 2=운영, 3=자유)
+        user (UserModel) : user.User 외래키 (request.user로 받아옴)
     Return :
         None
     """
     create_post_data["post_type"] = post_type
+    create_post_data["user"] = user.id
     post_serializer = PostSerializer(data = create_post_data)
     post_serializer.is_valid(raise_exception=True)
     post_serializer.save()
@@ -66,7 +67,7 @@ def check_can_create_post(user : UserModel, post_type : int) -> bool:
     Returns:
         bool
     """
-    user_type = user.user_type_id
+    user_type = user.user_type.user_type
     if is_manager(user_type) or (post_type==GENERAL and is_general(user_type)):
         return True
     return False
@@ -112,7 +113,7 @@ def check_can_update_post(user : UserModel, post_id : int):
     Returns:
         bool
     """
-    user_type = user.user_type_id
+    user_type = user.user_type.user_type
     post_type = PostModel.objects.get(id=post_id).post_type
     if is_manager(user_type) or (post_type==GENERAL and is_general(user_type)):
         return True
@@ -139,7 +140,7 @@ def check_can_delete_post(user : UserModel) -> bool:
     Returns:
         bool
     """
-    user_type = user.user_type_id
+    user_type = user.user_type.user_type
     if user_type==1 or (user_type==2 and delete_post.user==user):
         return True
     return False
