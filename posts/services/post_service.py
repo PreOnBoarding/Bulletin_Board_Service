@@ -1,12 +1,12 @@
 from typing import Union, Dict
 from posts.serializers import PostSerializer, PostUpdateLogSerializer
-from posts.models import Post as PostModel
+from posts.models import Post as PostModel, PostType
 from .permissions import is_manager, is_general
 from user.models import User as UserModel
 
-NOTICE=1
-ADMIN=2
-GENERAL=3
+NOTICE= "Notice"
+ADMIN= "Admin"
+GENERAL= "General"
 
 def get_post(post_type : int) -> PostSerializer:
     """
@@ -31,6 +31,7 @@ def check_get_post(post_type : int, user : UserModel) -> bool:
         bool
     """
     user_type = user.user_type.user_type
+    post_type = PostType.objects.get(id=post_type).post_type
     if (post_type==ADMIN and is_manager(user_type)) or post_type in [NOTICE,GENERAL]:
         return True
     return False
@@ -66,6 +67,7 @@ def check_can_create_post(user : UserModel, post_type : int) -> bool:
         bool
     """
     user_type = user.user_type.user_type
+    post_type = PostType.objects.get(id=post_type).post_type
     if is_manager(user_type) or (post_type==GENERAL and is_general(user_type)):
         return True
     return False
@@ -112,8 +114,9 @@ def check_can_update_post(user : UserModel, post_id : int):
         bool
     """
     user_type = user.user_type.user_type
-    post_type = PostModel.objects.get(id=post_id).post_type
-    if is_manager(user_type) or (post_type==GENERAL and is_general(user_type)):
+    post_type = PostModel.objects.get(id=post_id).post_type.post_type
+    update_post_user = PostModel.objects.get(id=post_id).user
+    if (is_manager(user_type) and post_type == NOTICE)  or (user == update_post_user):
         return True
     return False
 
