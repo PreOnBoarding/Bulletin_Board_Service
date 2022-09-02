@@ -383,3 +383,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,visualstudiocode,django,pycharm,venv
 Wayne_Hills/user/migrations/0002_user_phone_user_user_type_alter_user_age_and_more.py
+.env.prod
+.env.postgres.prod
