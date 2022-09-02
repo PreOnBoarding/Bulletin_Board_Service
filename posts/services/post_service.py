@@ -26,7 +26,7 @@ def get_post(post_type:int, user_type:int) -> PostSerializer:
         return get_posts_serializer or {"detail": "게시글이 없습니다"}
 
 
-def create_post(create_post_data:dict[str|str], post_type : int, user_type:int) -> bool:
+def create_post(create_post_data, post_type : int, user_type:int) -> bool:
     """
     Post의 Create를 담당하는 Service
     Args :
@@ -46,7 +46,7 @@ def create_post(create_post_data:dict[str|str], post_type : int, user_type:int) 
         return True
     return False
 
-def update_post(post_id : int, update_post_data: dict[str|str], user_type:int)-> PostSerializer:
+def update_post(post_id : int, update_post_data, user_type:int)-> PostSerializer:
     """
     모든게시판의 Update를 담당하는 Service
     Args :
