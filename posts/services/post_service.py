@@ -1,12 +1,12 @@
 from typing import Union, Dict
 from posts.serializers import PostSerializer, PostUpdateLogSerializer
-from posts.models import Post as PostModel
-from .permissions import is_manager, is_general
+from posts.models import Post as PostModel, PostType
+from posts.services.permissions import is_manager, is_general
 from user.models import User as UserModel
 
-NOTICE=1
-ADMIN=2
-GENERAL=3
+NOTICE= "Notice"
+ADMIN= "Admin"
+GENERAL= "General"
 
 def get_post(post_type : int) -> PostSerializer:
     """
@@ -27,11 +27,11 @@ def check_get_post(post_type : int, user : UserModel) -> bool:
     Args:
         post_type (int): posts.PostType 외래키 (urls에서 받아옴 1=공지, 2=운영, 3=자유)
         user (UserModel): user.User 외래키 (request.user를 통해 로그인한 유저 반환)
-
     Returns:
         bool
     """
     user_type = user.user_type.user_type
+    post_type = PostType.objects.get(id=post_type).post_type
     if (post_type==ADMIN and is_manager(user_type)) or post_type in [NOTICE,GENERAL]:
         return True
     return False
@@ -63,11 +63,11 @@ def check_can_create_post(user : UserModel, post_type : int) -> bool:
     Args:
         user (UserModel): user.User 외래키 (request.user를 통해 로그인한 유저 반환)
         post_type (int): posts.PostType 외래키 (urls에서 받아옴 1=공지, 2=운영, 3=자유)
-
     Returns:
         bool
     """
     user_type = user.user_type.user_type
+    post_type = PostType.objects.get(id=post_type).post_type
     if is_manager(user_type) or (post_type==GENERAL and is_general(user_type)):
         return True
     return False
@@ -114,8 +114,9 @@ def check_can_update_post(user : UserModel, post_id : int):
         bool
     """
     user_type = user.user_type.user_type
-    post_type = PostModel.objects.get(id=post_id).post_type
-    if is_manager(user_type) or (post_type==GENERAL and is_general(user_type)):
+    post_type = PostModel.objects.get(id=post_id).post_type.post_type
+    update_post_user = PostModel.objects.get(id=post_id).user
+    if (is_manager(user_type) and post_type == NOTICE)  or (user == update_post_user):
         return True
     return False
 

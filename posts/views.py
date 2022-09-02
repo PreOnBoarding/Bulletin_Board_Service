@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from rest_framework import status, exceptions
+from rest_framework import status
 from rest_framework.response import Response
 
 from posts.services.post_service import (
