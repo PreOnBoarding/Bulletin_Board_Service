@@ -75,6 +75,8 @@ def check_can_create_post(user : UserModel, post_type : int) -> bool:
 def update_post(user : int, post_id : int, update_post_data : Dict[str, str])-> Dict[str, Union[PostSerializer, PostUpdateLogSerializer]]:
     """
     모든게시판의 Update를 담당하는 Service
+    update_post에 대한 검증이 이루어지면 update_log를 생성하는 함수에 대한 검증 실행
+    두개 모두의 검증이 끝나야 저장
     Args :
         user (UserModel): user.User 외래키 (request.user를 통해 로그인한 유저 반환),
         post_id (int): posts.Post 외래키, url에 담아서 보내줌,
