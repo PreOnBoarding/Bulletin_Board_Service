@@ -32,9 +32,10 @@ class PostView(APIView):
         return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
 
     def put(self,request, post_id):
-        if check_can_update_post(request.user, post_id):
-            updated_data = update_post(post_id, request.data)
-            return Response(updated_data, status=status.HTTP_200_OK)
+        user = request.user
+        if check_can_update_post(user, post_id):
+            updated_log = update_post(user, post_id, request.data)
+            return Response(updated_log, status=status.HTTP_200_OK)
         return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self,request, post_id):

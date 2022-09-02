@@ -1,4 +1,5 @@
-from posts.serializers import PostSerializer
+from typing import Union, Dict
+from posts.serializers import PostSerializer, PostUpdateLogSerializer
 from posts.models import Post as PostModel
 from .permissions import is_manager, is_general
 from user.models import User as UserModel
@@ -71,23 +72,34 @@ def check_can_create_post(user : UserModel, post_type : int) -> bool:
     return False
 
 
-def update_post(post_id : int, update_post_data : dict[str|str])-> None:
+def update_post(user : int, post_id : int, update_post_data : Dict[str, str])-> Dict[str, Union[PostSerializer, PostUpdateLogSerializer]]:
     """
     모든게시판의 Update를 담당하는 Service
     Args :
-        "post_id" (int): posts.Post 외래키, url에 담아서 보내줌,
+        user (UserModel): user.User 외래키 (request.user를 통해 로그인한 유저 반환),
+        post_id (int): posts.Post 외래키, url에 담아서 보내줌,
         update_post_data (dict): {
             "title" (str): 게시글의 제목 or
             "content" (str) : 게시글의 내용
         }
     Return :
-        None
+        dict[str, Union[PostSerializer, PostUpdateLogSerializer]]
     """
+    log_data = {"user" : user.id, "post" : post_id}
+
     update_post = PostModel.objects.get(id=post_id)
     update_post_serializer = PostSerializer(update_post, update_post_data, partial=True)
     update_post_serializer.is_valid(raise_exception=True)
-    update_post_serializer.save()
 
+    post_update_log_serializer = PostUpdateLogSerializer(data=log_data)
+    post_update_log_serializer.is_valid(raise_exception=True)
+
+    update_post_serializer.save()
+    post_update_log_serializer.save()
+    return (
+        {"update_post" : update_post_serializer.data}, 
+        {"update_log" : post_update_log_serializer.data}
+        )
 
 def check_can_update_post(user : UserModel, post_id : int):
     """
@@ -121,7 +133,7 @@ def check_can_delete_post(user : UserModel) -> bool:
     """
     delete_post의 접근 권한을 담당하는 Service
     Args:
-        user (UserModel): _description_
+        user (UserModel): user.User 외래키 (request.user를 통해 로그인한 유저 반환),
     Returns:
         bool
     """
