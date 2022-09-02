@@ -1,4 +1,3 @@
-
 MANAGER="manager"
 GENERAL="general"
 
