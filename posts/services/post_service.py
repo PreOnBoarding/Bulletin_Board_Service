@@ -1,7 +1,7 @@
 from typing import Union, Dict
 from posts.serializers import PostSerializer, PostUpdateLogSerializer
 from posts.models import Post as PostModel, PostType
-from .permissions import is_manager, is_general
+from posts.services.permissions import is_manager, is_general
 from user.models import User as UserModel
 
 NOTICE= "Notice"
