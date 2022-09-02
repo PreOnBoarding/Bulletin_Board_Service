@@ -18,7 +18,7 @@ services:
     image: app:django
     container_name: django_container
     env_file:
-      - ./.env
+      - ./.env.prod
     command: gunicorn Wayne_Hills.wsgi:application --bind 0.0.0.0:8000
     expose:
       - 8000
