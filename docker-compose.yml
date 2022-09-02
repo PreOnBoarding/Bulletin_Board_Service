@@ -13,17 +13,11 @@ services:
     volumes:
       - .:/django
       - static_volume:/django/static
-    ports:
-      - 8000:8000
     image: app:django
     container_name: django_container
     env_file:
       - ./.env.prod
-    command: gunicorn Wayne_Hills.wsgi:application --bind 0.0.0.0:8000
-    expose:
-      - 8000
-    # command: sh -c "python manage.py collectstatic --no-input && python manage.py migrate && gunicorn Wayne_Hills.wsgi:application --bind 0.0.0.0:8000"
-
+    command: sh -c "python manage.py collectstatic --no-input && python manage.py migrate && gunicorn Wayne_Hills.wsgi:application --bind 0.0.0.0:8000"
 
 volumes:
   static_volume:
