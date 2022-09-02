@@ -37,7 +37,7 @@ def check_get_post(post_type : int, user : UserModel) -> bool:
     return False
 
 
-def create_post(create_post_data : dict[str|str], post_type : int) -> None:
+def create_post(create_post_data : Dict[str, Union[UserModel, str]], post_type : int) -> None:
     """
     Post의 Create를 담당하는 Service
     Args :
