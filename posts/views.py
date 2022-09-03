@@ -4,12 +4,14 @@ from rest_framework.response import Response
 
 from posts.services.post_service import (
     get_post,
-    check_get_post,
     create_post,
-    check_can_create_post,
     update_post,
-    check_can_update_post,
     delete_post,
+)
+from posts.services.permissions import (
+    check_get_post,
+    check_can_create_post,
+    check_can_update_post,
     check_can_delete_post,
 )
 
@@ -39,7 +41,7 @@ class PostView(APIView):
         return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
     
     def delete(self,request, post_id):
-        if check_can_delete_post(request.user):
+        if check_can_delete_post(request.user, post_id):
             delete_post(post_id)
             return Response({"detail" : "게시판의 글이 삭제되었습니다"}, status=status.HTTP_200_OK)
         return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)

@@ -6,7 +6,8 @@ from user.models import UserType as UserTypeModel, User as UserModel
 
 from posts.services.post_service import(
     get_post,
-    create_post
+    create_post,
+    update_post
 )
 
 
@@ -78,3 +79,12 @@ class TestPostService(TestCase):
             "content" : "내용"}
         with self.assertNumQueries(3):
             create_post(request_date, post_type)
+
+    def test_update_post(self):
+        """
+        생성되어있는 게시물을 업데이트하는 service 검증
+        case : 정상적으로 작동 했을 경우
+        """
+        general_user = UserModel.objects.get(username = "general")
+        general_post = PostModel.objects.get(content = "자유게시판 내용")
+        update_post()
