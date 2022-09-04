@@ -56,7 +56,7 @@ def is_author(user, post_id)->bool:
     return bool(user==post_obj.user)
 
 
-def check_get_post(post_type_id : int, user : UserModel) -> bool:
+def check_can_get_post(post_type_id : int, user : UserModel) -> bool:
     """
     get_post의 접근 권한을 담당하는 Service
     Args:

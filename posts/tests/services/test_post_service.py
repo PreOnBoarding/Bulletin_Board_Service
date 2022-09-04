@@ -24,6 +24,9 @@ class TestPostService(TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        """
+        TestCase를 위한 TestDB에 데이터 저장
+        """
         user_type_list = ["manager", "general"]
         post_type_list = ["Notice", "Admin", "General"]
         
@@ -62,7 +65,7 @@ class TestPostService(TestCase):
 
     def test_get_post(self):
         """
-        post_type에 따라 게시판을 불러오는 service 검증
+        post_type에 따라 게시판을 불러오는 get_post service 검증
         case : 정상적으로 작동 했을 경우
         """
         with self.assertNumQueries(1):
@@ -70,7 +73,7 @@ class TestPostService(TestCase):
 
     def test_create_post(self):
         """
-        post_type별로 게시물을 저장하는 service 검증
+        post_type별로 게시물을 저장하는 create_post service 검증
         case : 정상적으로 작동 했을 경우
         """
         manager_user = UserModel.objects.get(username = "manager")
@@ -84,7 +87,7 @@ class TestPostService(TestCase):
 
     def test_create_post_when_does_not_exist_post_type(self):
         """
-        post_type별로 게시물을 저장하는 service 검증
+        post_type별로 게시물을 저장하는 create_post service 검증
         case : 존재하지 않는 post_type을 넣었을 경우
         """
         post_type = DOSE_NOT_EXIST_NUM
@@ -98,7 +101,7 @@ class TestPostService(TestCase):
 
     def test_create_post_when_does_not_has_title(self):
         """
-        post_type별로 게시물을 저장하는 service 검증
+        post_type별로 게시물을 저장하는 create_post service 검증
         case : title이 비어있는 경우
         """
         post_type = DOSE_NOT_EXIST_NUM
@@ -111,7 +114,7 @@ class TestPostService(TestCase):
 
     def test_create_post_when_does_not_has_content(self):
         """
-        post_type별로 게시물을 저장하는 service 검증
+        post_type별로 게시물을 저장하는 create_post service 검증
         case : content가 비어있는 경우
         """
         post_type = DOSE_NOT_EXIST_NUM
@@ -124,7 +127,7 @@ class TestPostService(TestCase):
 
     def test_update_post(self):
         """
-        생성되어있는 게시물을 업데이트하는 service 검증
+        생성되어있는 게시물을 업데이트하는 update_post service 검증
         case : 정상적으로 작동 했을 경우
         """
         general_user = UserModel.objects.get(username = "general")
@@ -135,7 +138,7 @@ class TestPostService(TestCase):
 
     def test_update_post_when_post_id_does_not_exist(self):
         """
-        생성되어있는 게시물을 업데이트하는 service 검증
+        생성되어있는 게시물을 업데이트하는 update_post service 검증
         case : 수정할 post_id가 존재하지 않는 id인 경우
         """
         general_user = UserModel.objects.get(username = "general")
@@ -146,7 +149,7 @@ class TestPostService(TestCase):
 
     def test_update_post_when_update_data_does_not_exist(self):
         """
-        생성되어있는 게시물을 업데이트하는 service 검증
+        생성되어있는 게시물을 업데이트하는 update_post service 검증
         case : 수정할 내용이 비어있는 경우
         if문으로 request.data를 검증 후 비었다면 예외처리로 해결
         """
@@ -158,7 +161,7 @@ class TestPostService(TestCase):
 
     def test_delete_post(self):
         """
-        생성되어있는 게시물을 삭제하는 service 검증
+        생성되어있는 게시물을 삭제하는 delete_post service 검증
         case : 정상적으로 작동 했을 경우
         """
         general_post_id = PostModel.objects.get(content = "자유게시판 내용").id
@@ -167,7 +170,7 @@ class TestPostService(TestCase):
 
     def test_delete_post_when_post_id_does_not_exist(self):
         """
-        생성되어있는 게시물을 삭제하는 service 검증
+        생성되어있는 게시물을 삭제하는 delete_postservice 검증
         case : 삭제할 post_id가 존재하지 않는 id인 경우
         """
         post_id = DOSE_NOT_EXIST_NUM
