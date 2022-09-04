@@ -7,7 +7,8 @@ from user.models import UserType as UserTypeModel, User as UserModel
 from posts.services.post_service import(
     get_post,
     create_post,
-    update_post
+    update_post,
+    delete_post
 )
 
 
@@ -71,14 +72,14 @@ class TestPostService(TestCase):
         post_type별로 게시물을 저장하는 service 검증
         case : 정상적으로 작동 했을 경우
         """
-        manager_user_id = UserModel.objects.get(username = "manager").id
+        manager_user = UserModel.objects.get(username = "manager")
         post_type = GENERAL
         request_date = {
-            "user" : manager_user_id,
+            "user" : manager_user.id,
             "title" : "제목",
             "content" : "내용"}
         with self.assertNumQueries(3):
-            create_post(request_date, post_type)
+            create_post(request_date, post_type, manager_user)
 
     def test_update_post(self):
         """
@@ -86,5 +87,19 @@ class TestPostService(TestCase):
         case : 정상적으로 작동 했을 경우
         """
         general_user = UserModel.objects.get(username = "general")
-        general_post = PostModel.objects.get(content = "자유게시판 내용")
-        update_post()
+        general_post_id = PostModel.objects.get(content = "자유게시판 내용").id
+        update_post_data = {"title" : "제목수정"}
+        with self.assertNumQueries(5):
+            update_post(general_user, general_post_id, update_post_data)
+
+    def test_delete_post(self):
+        """
+        생성되어있는 게시물을 삭제하는 service 검증
+        case : 정상적으로 작동 했을 경우
+        """
+        general_post_id = PostModel.objects.get(content = "자유게시판 내용").id
+        with self.assertNumQueries(3):
+            delete_post(general_post_id)
+
+
+
