@@ -5,7 +5,42 @@
 - [김동우](https://velog.io/@kimphysicsman)
 - [윤슬기](https://nicesugi.tistory.com/)
 - [한예슬](https://velog.io/@tasha_han_1234)
-</br>
+
+## 📜 과제 분석
+
+- 서비스 정의
+  - MVP 서비스 : 유저가 게시판을 이용 <br>
+- User 등급 존재 (ex - 관리자, 운영자, 일반사용자) <br>
+- Post 타입 존재 (공지사항, 운영게시판, 자유게시판) <br>
+
+  <details>
+  <summary>공지 게시판</summary>
+  <div markdown="1">
+    - 조회 : 모두에게 <br>
+    - 작성 : 운영자 <br>
+    - 수정 : 운영자 <br>
+    - 삭제 : 운영자 <br>
+  </div>
+  </details>
+  <details>
+  <summary>운영 게시판</summary>
+  <div markdown="1">
+    - 조회 : 운영자 <br>
+    - 작성 : 운영자 <br>
+    - 수정 : 작성 운영자 <br>
+    - 삭제 : 작성 운영자 <br>
+  </div>
+  </details>
+  <details>
+  <summary>자유 게시판</summary>
+  <div markdown="1">
+    - 조회 : 모두에게 <br>
+    - 작성 : 가입이 된 사람 <br>
+    - 수정 : 작성자 <br>
+    - 삭제 : 작성자, 운영자 <br>
+  </div>
+  </details>
+- 통계 기능 (남/여,  나이별, 접속시간별 ⇒ 유저 모델에 포함)
 
 ## 👉 ERD
 <img width="785" alt="스크린샷 2022-09-01 오후 10 44 18" src="https://user-images.githubusercontent.com/104303285/187929462-fdf80dd7-388c-414d-9b85-7a5371704ab1.png">
@@ -37,4 +72,16 @@
 - 문제를 마주하여 트러블을 겪었다면, 어떻게 해결을 했는지 공유를 해주기
 - 각자의 작업을 미리 작성을 하여서 각자의 작업을 공유하기
 - 각자 맡은 기능의 브랜치에서 작업을 하며 PR을 올린다. PR은 본인 이외의 2인 이상에게 승인을 받아야 merge 가능
-- PR을 열심히 살펴봐주고 코멘트를 통하여 부족한부분 잡아주기 or 격려해주기
+### 🆕<new 규칙>
+- 9AM 모여서 각자의 할일 리스트 작성
+- 4PM 모여서 아침에 계획했던 결과확인, PR일괄 확인 및 작업내용 공유
+- 9PM TIL 링크 공유 및 하루의 마무리
+- PR 일괄 확인시에는 어떠한 작업에 대한 PR인지 간단한 설명 후 다른 팀원의 검토 진행
+
+### 📝 UniTest
+- Service Layer 구축
+- Service 에 대하여 예측가능한 Error를 Unitest진행
+- 결과가 나온 Error들을 Try, Execpt를 통한 핸들링
+- API에 대한 Unitest에서 제대로 Error에 대한 핸들링이 이루어 졌는가를 확인
+
+
