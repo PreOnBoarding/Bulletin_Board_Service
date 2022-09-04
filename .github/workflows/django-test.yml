@@ -1,5 +1,4 @@
 name: Django Test
-
 on: [push]
 
 jobs:
