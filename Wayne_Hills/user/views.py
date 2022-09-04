@@ -9,7 +9,6 @@ from user.Service.user_service import (
     user_get_service,
     user_post_service,
     user_update_service,
-    get_gender_statistics,
     user_delete_service,
     )
 
@@ -57,8 +56,3 @@ class TokenObtainPairView(TokenObtainPairView):
     """
     serializer_class = TokenObtainPairSerializer
     
-class GenderStatisticsView(APIView):
-
-    def get(self, request):
-        male_count, female_count = get_gender_statistics()
-        return Response({"male_count": male_count, "female_count": female_count}, status=status.HTTP_200_OK)
