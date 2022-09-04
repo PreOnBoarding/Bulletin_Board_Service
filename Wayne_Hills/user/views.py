@@ -8,7 +8,9 @@ from user.serializers_jwt import TokenObtainPairSerializer
 from user.Service.user_service import (
     user_get_service,
     user_post_service,
+    user_update_service,
     get_gender_statistics,
+    user_delete_service,
     )
 
 # 유저 CRUD 기능
@@ -27,8 +29,26 @@ class UserView(APIView):
     def post(self, request):
         result, result_detail = user_post_service(request.data)
         if result:
-            return Response({"detail": "회원가입 성공"}, status=status.HTTP_200_OK)
+            return Response(result_detail, status=status.HTTP_200_OK)
         return Response(result_detail, status=status.HTTP_400_BAD_REQUEST)
+
+    # 회원정보 수정기능
+    def put(self, request):
+        user_obj = request.user
+
+        result, result_detail = user_update_service(user_obj, request.data)
+        if result:
+            return Response(result_detail, status=status.HTTP_200_OK)
+        return Response(result_detail, status=status.HTTP_400_BAD_REQUEST)
+
+    # 회원탈퇴 기능
+    def delete(self, request):
+        user_obj = request.user
+        result, result_detail = user_delete_service(user_obj)
+        if result:
+            return Response(result_detail, status=status.HTTP_200_OK)
+        return Response(result_detail, status=status.HTTP_400_BAD_REQUEST)
+    
 
 class TokenObtainPairView(TokenObtainPairView):
     """
