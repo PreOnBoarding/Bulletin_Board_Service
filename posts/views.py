@@ -1,6 +1,7 @@
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework import status, exceptions
 from rest_framework.response import Response
+from posts.models import Post as PostModel
 
 from posts.services.post_service import (
     get_post,
@@ -28,18 +29,28 @@ class PostView(APIView):
         return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, post_type):
-        if check_can_create_post(request.user, post_type):
-            create_post(request.data, post_type, request.user)
-            return Response({"detail" : POST_TYPE_LIST[post_type] + "에 게시물을 작성했습니다."}, status=status.HTTP_200_OK)
-        return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
+        try:
+            if check_can_create_post(request.user, post_type):
+                create_post(request.data, post_type, request.user)
+                return Response({"detail" : POST_TYPE_LIST[post_type] + "에 게시물을 작성했습니다."}, status=status.HTTP_200_OK)
+            return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
+        except exceptions.ValidationError:
+            return Response({"detail" : "접근 권한은 있지만, 형식에 맞지 않는 요소가 있습니다."}, status=status.HTTP_400_BAD_REQUEST)
+
 
     def put(self,request, post_id):
         user = request.user
-        if check_can_update_post(user, post_id):
-            updated_log = update_post(user, post_id, request.data)
-            return Response(updated_log, status=status.HTTP_200_OK)
-        return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
-    
+        try:
+            if check_can_update_post(user, post_id):
+                if request.data == {}:
+                    return Response({"detail": "수정할 내용이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
+                updated_log = update_post(user, post_id, request.data)
+                return Response(updated_log, status=status.HTTP_200_OK)
+            return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
+        except PostModel.DoesNotExist:
+            return Response({"detail" : "수정할 게시글이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
+
+
     def delete(self,request, post_id):
         if check_can_delete_post(request.user, post_id):
             delete_post(post_id)

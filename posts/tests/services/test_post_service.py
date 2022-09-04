@@ -11,10 +11,11 @@ from posts.services.post_service import(
     delete_post
 )
 
-
 NOTICE=1
 ADMIN=2
 GENERAL=3
+
+DOSE_NOT_EXIST_NUM = 0
 
 class TestPostService(TestCase):
     """
@@ -81,6 +82,46 @@ class TestPostService(TestCase):
         with self.assertNumQueries(3):
             create_post(request_date, post_type, manager_user)
 
+    def test_create_post_when_does_not_exist_post_type(self):
+        """
+        post_type별로 게시물을 저장하는 service 검증
+        case : 존재하지 않는 post_type을 넣었을 경우
+        """
+        post_type = DOSE_NOT_EXIST_NUM
+        manager_user = UserModel.objects.get(username = "manager")
+        request_date = {
+            "user" : DOSE_NOT_EXIST_NUM,
+            "title" : "제목",
+            "content" : "내용"}
+        with self.assertRaises(exceptions.ValidationError):
+            create_post(request_date, post_type, manager_user)
+
+    def test_create_post_when_does_not_has_title(self):
+        """
+        post_type별로 게시물을 저장하는 service 검증
+        case : title이 비어있는 경우
+        """
+        post_type = DOSE_NOT_EXIST_NUM
+        manager_user = UserModel.objects.get(username = "manager")
+        request_date = {
+            "user" : DOSE_NOT_EXIST_NUM,
+            "content" : "내용"}
+        with self.assertRaises(exceptions.ValidationError):
+            create_post(request_date, post_type, manager_user)
+
+    def test_create_post_when_does_not_has_content(self):
+        """
+        post_type별로 게시물을 저장하는 service 검증
+        case : content가 비어있는 경우
+        """
+        post_type = DOSE_NOT_EXIST_NUM
+        manager_user = UserModel.objects.get(username = "manager")
+        request_date = {
+            "user" : DOSE_NOT_EXIST_NUM,
+            "title" : "제목",}
+        with self.assertRaises(exceptions.ValidationError):
+            create_post(request_date, post_type, manager_user)
+
     def test_update_post(self):
         """
         생성되어있는 게시물을 업데이트하는 service 검증
@@ -92,6 +133,29 @@ class TestPostService(TestCase):
         with self.assertNumQueries(5):
             update_post(general_user, general_post_id, update_post_data)
 
+    def test_update_post_when_post_id_does_not_exist(self):
+        """
+        생성되어있는 게시물을 업데이트하는 service 검증
+        case : 수정할 post_id가 존재하지 않는 id인 경우
+        """
+        general_user = UserModel.objects.get(username = "general")
+        post_id = DOSE_NOT_EXIST_NUM
+        update_post_data = {"title" : "제목수정"}
+        with self.assertRaises(PostModel.DoesNotExist):
+            update_post(general_user, post_id, update_post_data)
+
+    def test_update_post_when_update_data_does_not_exist(self):
+        """
+        생성되어있는 게시물을 업데이트하는 service 검증
+        case : 수정할 내용이 비어있는 경우
+        if문으로 request.data를 검증 후 비었다면 예외처리로 해결
+        """
+        general_user = UserModel.objects.get(username = "general")
+        general_post_id = PostModel.objects.get(content = "자유게시판 내용").id
+        update_post_data = {}
+        with self.assertNumQueries(5):
+            update_post(general_user, general_post_id, update_post_data)
+
     def test_delete_post(self):
         """
         생성되어있는 게시물을 삭제하는 service 검증
@@ -100,6 +164,15 @@ class TestPostService(TestCase):
         general_post_id = PostModel.objects.get(content = "자유게시판 내용").id
         with self.assertNumQueries(3):
             delete_post(general_post_id)
+
+    def test_delete_post_when_post_id_does_not_exist(self):
+        """
+        생성되어있는 게시물을 삭제하는 service 검증
+        case : 삭제할 post_id가 존재하지 않는 id인 경우
+        """
+        post_id = DOSE_NOT_EXIST_NUM
+        with self.assertRaises(PostModel.DoesNotExist):
+            delete_post(post_id)
 
 
 
