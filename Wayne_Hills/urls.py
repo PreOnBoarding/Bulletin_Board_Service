@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include("user.urls")),
     path('post/', include("posts.urls")),
+    path('statistic/', include("statistic.urls")),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root= settings.STATIC_ROOT)
