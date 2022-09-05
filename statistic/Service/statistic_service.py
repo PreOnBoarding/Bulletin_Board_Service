@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from user.models import User, UserLog
 
 def get_gender_statistics():
@@ -23,7 +25,7 @@ def get_age_statistics():
 
     for i in range(10):
         start_age = i * 10
-        end_age = i * 10 + 9
+        end_age = start_age + 9
 
         count = User.objects.filter(age__gte=start_age, age__lte=end_age).count()
         str_range = f"{start_age}~{end_age}"
@@ -34,3 +36,22 @@ def get_age_statistics():
     count_by_age[str_range] = count
 
     return count_by_age
+
+def get_logintime_statistics():
+    """
+        접속 시간별 유저 수 통계 함수
+
+    Return :
+        count_by_logintime (dict) : 나이구간별 유저 수
+    """
+    count_by_logintime = dict()
+    
+    for i in range(12):
+        start_time = i * 2
+        end_time = start_time + 2
+        count = UserLog.objects.filter(login_date__hour__gte=start_time, login_date__hour__lt=end_time).count()
+        str_time = f"{start_time}~{end_time}"
+        count_by_logintime[str_time] = count
+        
+
+    return count_by_logintime

@@ -5,4 +5,5 @@ from statistic import views
 urlpatterns = [
     path('gender', views.GenderStatisticsView.as_view()),
     path('age', views.AgeStatisticsView.as_view()),
+    path('logintime', views.LoginTimeStatisticsView.as_view()),
 ]

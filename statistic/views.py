@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from statistic.Service.statistic_service import (
     get_gender_statistics,
     get_age_statistics,
+    get_logintime_statistics,
 )
 
 
@@ -27,3 +28,13 @@ class AgeStatisticsView(APIView):
         count_by_age = get_age_statistics()
             
         return Response(count_by_age, status=status.HTTP_200_OK)
+
+
+class LoginTimeStatisticsView(APIView):
+    """
+    접속 시간 별 통계 기능
+    """
+    
+    def get(self, request):
+        count_by_logintime = get_logintime_statistics()
+        return Response(count_by_logintime, status=status.HTTP_200_OK)
