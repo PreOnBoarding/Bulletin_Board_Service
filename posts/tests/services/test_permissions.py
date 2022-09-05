@@ -405,7 +405,7 @@ class TestPostPermission(TestCase):
         게시글 타입: User가 작성한 게시글
         유저 타입 : General
         """
-        post_type_id = PostTypeModel.objects.get(user=1).id
+        post_type_id = PostModel.objects.get(user=1).id
         user = UserModel.objects.get(username = "general")
         self.assertEqual(check_can_delete_post(user, post_type_id), True)
 
@@ -415,7 +415,7 @@ class TestPostPermission(TestCase):
         게시글 타입: User가 작성한 게시글
         유저 타입 : General
         """
-        post_type_id = PostTypeModel.objects.get(user=2).id
+        post_type_id = PostModel.objects.get(user=2).id
         user = UserModel.objects.get(username = "general")
         self.assertEqual(check_can_delete_post(user, post_type_id), True)
 
