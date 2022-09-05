@@ -10,6 +10,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media
+__pycache__
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
@@ -139,6 +140,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.env.prod
+.env.postgres.prod
 
 # Spyder project settings
 .spyderproject
@@ -381,3 +384,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,visualstudiocode,django,pycharm,venv
+Wayne_Hills/user/migrations/0002_user_phone_user_user_type_alter_user_age_and_more.py
+.env.prod
+.env.postgres.prod
