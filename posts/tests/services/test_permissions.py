@@ -165,6 +165,37 @@ class TestPostPermission(TestCase):
             with self.assertRaises(AttributeError):
                 check_can_get_post(post, user)
 
+    def test_check_can_creat_post(self):
+        general_user = UserModel.objects.create(
+            username="general", 
+            password="general_password",
+            gender = "male",
+            age = "30",
+            phone = "010-0000-0000",
+            user_type = UserTypeModel.objects.get(user_type="general")
+        )
+        post_type = PostTypeModel.objects.get(id=1).post_type
+
+
+
+
+def check_can_create_post(user : UserModel, post_type_id : int) -> bool:
+    """
+    create_post의 접근 권한을 담당하는 Service
+    Args:
+        user (UserModel): user.User 외래키 (request.user를 통해 로그인한 유저 반환)
+        post_type (int): posts.PostType 외래키 (urls에서 받아옴 1=공지, 2=운영, 3=자유)
+    Returns:
+        bool
+    """
+    user_type = define_user_type(user)
+    post_type = PostType.objects.get(id=post_type_id).post_type
+    if (
+        user_is_manager(user_type) 
+        or 
+        (user_is_general(user_type) and post_is_general(post_type))):
+        return True
+    return False
 
 
 

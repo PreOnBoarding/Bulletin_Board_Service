@@ -8,7 +8,7 @@ POST_NOTICE= "Notice"
 POST_ADMIN= "Admin"
 POST_GENERAL= "General"
 
-def take_user_type(user : UserModel):
+def define_user_type(user : UserModel):
     """
     유저의 타입이 무엇인지 str로 반환해주는 함수
     Args:
@@ -65,7 +65,7 @@ def check_can_get_post(post_type_id : int, user : UserModel) -> bool:
     Returns:
         bool
     """
-    user_type = take_user_type(user)
+    user_type = define_user_type(user)
     post_type = PostType.objects.get(id=post_type_id).post_type
     if (
         (post_is_admin(post_type) and user_is_manager(user_type)) 
@@ -86,7 +86,7 @@ def check_can_create_post(user : UserModel, post_type_id : int) -> bool:
     Returns:
         bool
     """
-    user_type = take_user_type(user)
+    user_type = define_user_type(user)
     post_type = PostType.objects.get(id=post_type_id).post_type
     if (
         user_is_manager(user_type) 
@@ -105,7 +105,7 @@ def check_can_update_post(user : UserModel, post_id : int):
     Returns:
         bool
     """
-    user_type = take_user_type(user)
+    user_type = define_user_type(user)
     post_type = PostModel.objects.get(id=post_id).post_type.post_type
     if (
         (user_is_manager(user_type) and post_is_notice(post_type))
@@ -123,7 +123,7 @@ def check_can_delete_post(user : UserModel, post_id : int) -> bool:
     Returns:
         bool
     """
-    user_type = take_user_type(user)
+    user_type = define_user_type(user)
     post_type = PostModel.objects.get(id=post_id).post_type.post_type
     if (
         (user_is_manager(user_type) and (post_is_notice(post_type) or post_is_general(post_type)))
