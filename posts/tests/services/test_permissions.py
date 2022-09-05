@@ -414,12 +414,13 @@ class TestPostPermission(TestCase):
     def test_check_can_delete_post_when_not_author(self):
         """
         게시판 Delete에 대한 권한을 체크하는 check_can_get_post Service 검증
-        게시글 타입: User가 작성한 게시글
+        게시글 타입: User가 작성하지 않은 게시글
         유저 타입 : General
         """
-        user = UserModel.objects.get(username = "general")
-        post_obj = PostModel.objects.get(user_username="manager")
-        post_id = post_obj.post_type.id
-        self.assertEqual(check_can_delete_post(user, post_id), False)
+        general_user = UserModel.objects.get(username = "general")
+        manager_user = UserModel.objects.get(username="manager")
+        manager_post_obj = PostModel.objects.filter(user=manager_user)[0]
+        post_id = manager_post_obj.post_type.id
+        self.assertEqual(check_can_delete_post(general_user, post_id), False)
 
 
