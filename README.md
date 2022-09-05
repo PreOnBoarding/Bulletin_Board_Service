@@ -55,6 +55,10 @@
 <img width="785" alt="스크린샷 2022-09-01 오후 10 44 18" src="https://user-images.githubusercontent.com/104303285/187929462-fdf80dd7-388c-414d-9b85-7a5371704ab1.png">
 </br>
 
+## 🙏 API
+![image](https://user-images.githubusercontent.com/101394490/188385702-2ea2a149-ec89-4506-a52e-d08c0d69f7f0.png)
+
+
 ## 📌 컨벤션
 ### ❓ Commit Message
 - feat/ : 새로운 기능 추가/수정/삭제
