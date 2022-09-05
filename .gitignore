@@ -387,3 +387,5 @@ $RECYCLE.BIN/
 Wayne_Hills/user/migrations/0002_user_phone_user_user_type_alter_user_age_and_more.py
 .env.prod
 .env.postgres.prod
+.vscode/settings.json
+.vscode/launch.json

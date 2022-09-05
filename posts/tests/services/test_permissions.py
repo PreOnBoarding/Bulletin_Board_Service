@@ -1,3 +1,4 @@
+from multiprocessing.sharedctypes import Value
 from django.test import TestCase
 
 from posts.services.permissions import(
@@ -64,7 +65,7 @@ class TestPostPermission(TestCase):
         general_user = UserModel.objects.get(username = "general")
         self.assertEqual(check_can_get_post(post_type_id, general_user), True)
 
-    def test_check_can_get_post_when_menager_user_get_general_post(self):
+    def test_check_can_get_post_when_manager_user_get_general_post(self):
         """
         게시판 Get에 대한 권한을 체크하는 check_can_get_post Service 검증
         게시글 타입 : General
@@ -113,3 +114,57 @@ class TestPostPermission(TestCase):
         post_type_id = PostTypeModel.objects.get(post_type="Notice").id
         manager_user = UserModel.objects.get(username = "manager")
         self.assertEqual(check_can_get_post(post_type_id, manager_user), True)
+
+    def test_check_can_get_post_with_correct_post_type_(self):
+        """
+        게시판 Get에 대한 권한을 체크하는 check_can_get_post Service post type이 정확하게 출력되는 경우
+        """
+        true_post_type_id_list=[1, 3.5, True]
+        user = UserModel.objects.get(username = "general")
+        for item in true_post_type_id_list:
+            self.assertEqual(check_can_get_post(item, user), True)
+
+
+    def test_check_can_get_post_with_incorrect_post_type_value_error(self):
+        """
+        게시판 Get에 대한 권한을 체크하는 check_can_get_post Service post type이 정확하지 않아 value 에러를 출력할때
+        """
+        false_post_type_id_list=["","string"]
+        user = UserModel.objects.get(username = "general")
+        for item in false_post_type_id_list:
+            with self.assertRaises(ValueError):
+                check_can_get_post(item, user)
+
+    def test_check_can_get_post_with_incorrect_post_type_type_error(self):
+        """
+        게시판 Get에 대한 권한을 체크하는 check_can_get_post Service post type이 없거나 정확하지 않아 type error를 출력할때
+        """
+        false_post_type_id_list=[2+5j]
+        user = UserModel.objects.get(username = "general")
+        for item in false_post_type_id_list:
+            with self.assertRaises(TypeError):
+                check_can_get_post(item, user)
+
+    def test_check_can_get_post_with_incorrect_post_type_matching_query_error(self):
+        """
+        게시판 Get에 대한 권한을 체크하는 check_can_get_post Service post type이 없거나 정확하지 않아 matching query error를 출력할때
+        """
+        false_post_type_id_list=[-3,5]
+        user = UserModel.objects.get(username = "general")
+        for item in false_post_type_id_list:
+            with self.assertRaises(PostTypeModel.DoesNotExist):
+                check_can_get_post(item, user)
+
+    def test_check_can_get_post_with_incorrect_user_type_(self):
+        """
+        게시판 Get에 대한 권한을 체크하는 check_can_get_post Service user type이 없거나 정확하지 않아 attribute error를 출력할때
+        """
+        false_user_type_list=["string", 12, 3.5, ""]
+        post = PostTypeModel.objects.get(post_type="General").id
+        for user in false_user_type_list:
+            with self.assertRaises(AttributeError):
+                check_can_get_post(post, user)
+
+
+
+
