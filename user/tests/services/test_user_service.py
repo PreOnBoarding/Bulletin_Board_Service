@@ -271,7 +271,7 @@ class UserServiceView(TestCase):
         with self.assertNumQueries(2):
             user_info = user_get_service("manager")
         
-        self.assertEqual("manager", user_info.username)
+        self.assertEqual("manager", user_info["username"])
 
     
     def test_user_get_when_username_is_not_exist(self):
