@@ -120,9 +120,10 @@ class TestPostPermission(TestCase):
         게시판 Get에 대한 권한을 체크하는 check_can_get_post Service post type이 정확한지 검증
         게시글 id 타입: int, float, True
         """
-        true_post_type_id_list=[1, 3.5, True]
+        true_post_type_id_list= [1, 3.5, True]
         user = UserModel.objects.get(username = "general")
         for item in true_post_type_id_list:
+            
             self.assertEqual(check_can_get_post(item, user), True)
 
 
