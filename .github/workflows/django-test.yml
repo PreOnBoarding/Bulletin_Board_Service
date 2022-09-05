@@ -31,4 +31,5 @@ jobs:
           SECRET_KEY: ${{secrets.SECRET_KEY}}
         run: |
           python manage.py test posts/tests
+          python manage.py test statistic/tests
           python manage.py test user/tests

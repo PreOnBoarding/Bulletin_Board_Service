@@ -63,10 +63,6 @@ class UserServiceView(TestCase):
             "user_type": "general" 
         }
             
-        # with CaptureQueriesContext(connection) as ctx:
-        #     user_post_service(user_info)
-        # queries = connection.queries
-
         count_1 = User.objects.all().count()
 
         with self.assertNumQueries(5):
@@ -272,8 +268,10 @@ class UserServiceView(TestCase):
         case : 정상 작동
         """
 
-
-        user_get_service("manager")
+        with self.assertNumQueries(2):
+            user_info = user_get_service("manager")
+        
+        self.assertEqual("manager", user_info["username"])
 
     
     def test_user_get_when_username_is_not_exist(self):
