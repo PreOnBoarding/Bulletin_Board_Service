@@ -64,6 +64,10 @@
 - Docstring을 활용하여 클래스와 함수단위에 설명을 적어주도록 하자.
 - input/output을 명시하여 문서 없이 코드만으로 어떠한 결과가 나오는지 알 수 있도록 하자.
 
+### ❓ Lint
+- autopep8 사용
+- github actions 작동시 lint with flake8적용
+
 ### 🚷 벼락치기의 규칙
 - 컨벤션 지키기
 - Commit 단위 지키기
