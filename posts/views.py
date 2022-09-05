@@ -51,8 +51,12 @@ class PostView(APIView):
             return Response({"detail" : "수정할 게시글이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
 
 
-    def delete(self,request, post_id):
-        if check_can_delete_post(request.user, post_id):
-            delete_post(post_id)
-            return Response({"detail" : "게시판의 글이 삭제되었습니다"}, status=status.HTTP_200_OK)
-        return Response({"detail": "접근 권한이 없습니다."},status=status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, post_id):
+        if request.user.is_anonymous:
+            return Response({"detail" : "접근 권한이 없습니다."}, status=status.HTTP_401_UNAUTHORIZED)
+        try:
+            if check_can_delete_post(request.user, post_id):
+                delete_post(post_id)
+                return Response({"detail" : "게시판의 글이 삭제되었습니다."}, status=status.HTTP_200_OK)
+        except PostModel.DoesNotExist:
+            return Response({"detail" : "삭제할 게시글이 존재하지 않습니다."}, status=status.HTTP_404_NOT_FOUND)
