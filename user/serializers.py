@@ -24,9 +24,19 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            if key == "password":
+                instance.set_password(value)
+                continue
+            setattr(instance, key, value)
+        instance.save()
+
+        return instance
+
     def get_user_type(self, obj):
         if obj.user_type:
-            return obj.user_type
+            return obj.user_type.user_type
         return "None"
 
 
