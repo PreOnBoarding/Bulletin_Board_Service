@@ -297,7 +297,7 @@ class TestPostPermission(TestCase):
         """
         post_type_id = PostTypeModel.objects.get(post_type="Admin").id
         manager_user = UserModel.objects.get(username = "manager")
-        self.assertEqual(check_can_update_post(manager_user, post_type_id), False)
+        self.assertEqual(check_can_update_post(manager_user, post_type_id), True)
 
     def test_check_can_update_post_when_general_user_get_notice_post(self):
         """
