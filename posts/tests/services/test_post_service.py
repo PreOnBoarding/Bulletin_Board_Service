@@ -11,9 +11,10 @@ from posts.services.post_service import(
     delete_post
 )
 
-NOTICE=1
-ADMIN=2
-GENERAL=3
+
+POST_NOTICE=1
+POST_ADMIN=2
+POST_GENERAL=3
 
 DOSE_NOT_EXIST_NUM = 0
 
@@ -30,7 +31,6 @@ class TestPostService(TestCase):
         user_type_list = ["manager", "general"]
         post_type_list = ["Notice", "Admin", "General"]
         
-
         for post_type in post_type_list:
             PostTypeModel.objects.create(post_type=post_type)
         for user_type in user_type_list:
@@ -69,7 +69,7 @@ class TestPostService(TestCase):
         case : 정상적으로 작동 했을 경우
         """
         with self.assertNumQueries(1):
-            get_post(NOTICE)
+            get_post(POST_NOTICE)
 
     def test_create_post(self):
         """
@@ -77,7 +77,7 @@ class TestPostService(TestCase):
         case : 정상적으로 작동 했을 경우
         """
         manager_user = UserModel.objects.get(username = "manager")
-        post_type = GENERAL
+        post_type = POST_GENERAL
         request_date = {
             "user" : manager_user.id,
             "title" : "제목",
@@ -93,7 +93,7 @@ class TestPostService(TestCase):
         post_type = DOSE_NOT_EXIST_NUM
         manager_user = UserModel.objects.get(username = "manager")
         request_date = {
-            "user" : DOSE_NOT_EXIST_NUM,
+            "user" : manager_user,
             "title" : "제목",
             "content" : "내용"}
         with self.assertRaises(exceptions.ValidationError):

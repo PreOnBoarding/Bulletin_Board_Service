@@ -10,7 +10,7 @@ POST_GENERAL= "General"
 
 def take_user_type(user : UserModel):
     """
-    유저의 타입이 무엇인지 srt로 반환해주는 함수
+    유저의 타입이 무엇인지 str로 반환해주는 함수
     Args:
         user (UserModel): user obj
     Returns:
@@ -44,7 +44,7 @@ def post_is_admin(post_type:str)->bool:
 
 def post_is_general(post_type:str)->bool:
     """
-    게시물의 타입이 genera인가를 체크
+    게시물의 타입이 general인가를 체크
     """
     return bool(post_type==POST_GENERAL)
 
