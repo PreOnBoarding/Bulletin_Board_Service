@@ -388,3 +388,4 @@ Wayne_Hills/user/migrations/0002_user_phone_user_user_type_alter_user_age_and_mo
 .env.prod
 .env.postgres.prod
 .env.dev
+.vscode/launch.json
