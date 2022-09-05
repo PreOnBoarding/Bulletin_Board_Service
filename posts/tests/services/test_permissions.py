@@ -245,6 +245,7 @@ class TestPostPermission(TestCase):
         for user in false_user_type_list:
             with self.assertRaises(AttributeError):
                 check_can_create_post(user, post)
+                
     def test_check_can_create_post_with_incorrect_post_type_(self):
         """
         게시판 POST 에 대한 권한을 체크하는 check_can_create_post Service 검증
@@ -257,6 +258,166 @@ class TestPostPermission(TestCase):
             with self.assertRaises(AttributeError):
                 check_can_get_post(user, item)
 
+    def test_check_can_update_post_when_general_user_get_general_post(self):
+        """
+        게시판 Update에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : General
+        유저 타입 : General
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="General").id
+        general_user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_update_post(general_user, post_type_id), False)
 
+    def test_check_can_update_post_when_manager_user_get_general_post(self):
+        """
+        게시판 Update에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : General
+        유저 타입 : Manager
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="General").id
+        manager_user = UserModel.objects.get(username = "manager")
+        self.assertEqual(check_can_update_post(manager_user, post_type_id), False)
+
+    def test_check_can_update_post_when_general_user_get_admin_post(self):
+        """
+        게시판 Update에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : Admin
+        유저 타입 : General
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Admin").id
+        general_user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_update_post(general_user, post_type_id), False)
+
+    def test_check_can_update_post_when_manager_user_get_admin_post(self):
+        """
+        게시판 Update에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : Admin
+        유저 타입 : Manager
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Admin").id
+        manager_user = UserModel.objects.get(username = "manager")
+        self.assertEqual(check_can_update_post(manager_user, post_type_id), False)
+
+    def test_check_can_update_post_when_general_user_get_notice_post(self):
+        """
+        게시판 Update에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : Notice
+        유저 타입 : General
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Notice").id
+        general_user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_update_post(general_user, post_type_id), False)
+
+    def test_check_can_update_post_when_manager_user_get_notice_post(self):
+        """
+        게시판 Update에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : Notice
+        유저 타입 : Manager
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Notice").id
+        manager_user = UserModel.objects.get(username = "manager")
+        self.assertEqual(check_can_update_post(manager_user, post_type_id), True)
+
+    def test_check_can_update_post_when_user_is_author(self):
+        """
+        게시판 Update에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : Notice
+        유저 타입 : Manager
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="General").id
+        general_user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_update_post(general_user, post_type_id), True)
+
+    def test_check_can_update_post_when_user_is_not_author(self):
+        """
+        게시판 Update에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : Notice
+        유저 타입 : Manager
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="General").id
+        general_user = UserModel.objects.get(username = "manager")
+        self.assertEqual(check_can_update_post(general_user, post_type_id), False)
+
+##
+
+    def test_check_can_delete_post_when_general_user_get_general_post(self):
+        """
+        게시판 Delete에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : General
+        유저 타입 : General
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="General").id
+        general_user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_delete_post(general_user, post_type_id), False)
+
+    def test_check_can_delete_post_when_manager_user_get_general_post(self):
+        """
+        게시판 Delete에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : General
+        유저 타입 : Manager
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="General").id
+        manager_user = UserModel.objects.get(username = "manager")
+        self.assertEqual(check_can_delete_post(manager_user, post_type_id), True)
+
+    def test_check_can_delete_post_when_general_user_get_admin_post(self):
+        """
+        게시판 Delete에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : Admin
+        유저 타입 : General
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Admin").id
+        general_user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_delete_post(general_user, post_type_id), False)
+
+    def test_check_can_delete_post_when_manager_user_get_admin_post(self):
+        """
+        게시판 Delete에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : Admin
+        유저 타입 : Manager
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Admin").id
+        manager_user = UserModel.objects.get(username = "manager")
+        self.assertEqual(check_can_delete_post(manager_user, post_type_id), False)
+
+    def test_check_can_delete_post_when_general_user_get_notice_post(self):
+        """
+        게시판 Delete에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : Notice
+        유저 타입 : General
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Notice").id
+        general_user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_delete_post(general_user, post_type_id), False)
+
+    def test_check_can_delete_post_when_manager_user_get_notice_post(self):
+        """
+        게시판 Delete에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입 : Notice
+        유저 타입 : Manager
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Notice").id
+        manager_user = UserModel.objects.get(username = "manager")
+        self.assertEqual(check_can_delete_post(manager_user, post_type_id), True)
+
+    def test_check_can_delete_post_when_author(self):
+        """
+        게시판 Delete에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입: User가 작성한 게시글
+        유저 타입 : General
+        """
+        post_type_id = PostTypeModel.objects.get(user=1).id
+        user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_delete_post(user, post_type_id), True)
+
+    def test_check_can_delete_post_when_not_author(self):
+        """
+        게시판 Delete에 대한 권한을 체크하는 check_can_get_post Service 검증
+        게시글 타입: User가 작성한 게시글
+        유저 타입 : General
+        """
+        post_type_id = PostTypeModel.objects.get(user=2).id
+        user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_delete_post(user, post_type_id), True)
 
 

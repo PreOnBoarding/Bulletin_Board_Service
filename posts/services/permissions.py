@@ -52,7 +52,7 @@ def is_author(user, post_id)->bool:
     """
     유저가 게시물 작성자인가를 체크
     """
-    post_obj = PostModel.objects.get(id=post_id).post_type.post_type
+    post_obj = PostModel.objects.get(id=post_id)
     return bool(user==post_obj.user)
 
 
@@ -126,7 +126,7 @@ def check_can_delete_post(user : UserModel, post_id : int) -> bool:
     user_type = define_user_type(user)
     post_type = PostModel.objects.get(id=post_id).post_type.post_type
     if (
-        (user_is_manager(user_type) and (post_is_notice(post_type) or post_is_general(post_type)))
+        (user_is_manager(user_type) and ((post_is_notice(post_type) or post_is_general(post_type))))
         or 
         is_author(user, post_id)):
         return True
