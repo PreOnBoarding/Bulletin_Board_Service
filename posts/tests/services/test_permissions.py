@@ -46,12 +46,12 @@ class TestPostPermission(TestCase):
             )
         # 공지사항, 운영게시판, 자유게시판 생성
         post_name_list = ["공지사항", "운영게시판", "자유게시판"]
-        for A in range(3):
+        for num in range(len(post_name_list)):
             PostModel.objects.create(
-            user = manager_user if A <2 else general_user,
-            title = post_name_list[A] + " 제목",
-            content = post_name_list[A] + " 내용",
-            post_type = PostTypeModel.objects.get(post_type=post_type_list[A])
+            user = manager_user if num <2 else general_user,
+            title = post_name_list[num] + " 제목",
+            content = post_name_list[num] + " 내용",
+            post_type = PostTypeModel.objects.get(post_type=post_type_list[num])
         )
     
     # 
@@ -165,37 +165,87 @@ class TestPostPermission(TestCase):
             with self.assertRaises(AttributeError):
                 check_can_get_post(post, user)
 
-    def test_check_can_creat_post(self):
-        general_user = UserModel.objects.create(
-            username="general", 
-            password="general_password",
-            gender = "male",
-            age = "30",
-            phone = "010-0000-0000",
-            user_type = UserTypeModel.objects.get(user_type="general")
-        )
-        post_type = PostTypeModel.objects.get(id=1).post_type
+    def test_check_can_create_post_when_general_user_get_general_post(self):
+        """
+        게시판 POST 에 대한 권한을 체크하는 check_can_create_post Service 검증
+        게시글 타입 : General
+        유저 타입 : General
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="General").id
+        general_user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_create_post(general_user, post_type_id), True)
 
+    def test_check_can_create_post_when_manager_user_get_general_post(self):
+        """
+        게시판 POST 에 대한 권한을 체크하는 check_can_create_post Service 검증
+        게시글 타입 : General
+        유저 타입 : Manager
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="General").id
+        manager_user = UserModel.objects.get(username = "manager")
+        self.assertEqual(check_can_create_post(manager_user, post_type_id), True)
 
+    def test_check_can_create_post_when_general_user_get_admin_post(self):
+        """
+        게시판 POST 에 대한 권한을 체크하는 check_can_create_post Service 검증
+        게시글 타입 : Admin
+        유저 타입 : General
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Admin").id
+        general_user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_create_post(general_user, post_type_id), False)
 
+    def test_check_can_create_post_when_manager_user_get_admin_post(self):
+        """
+        게시판 POST 에 대한 권한을 체크하는 check_can_create_post Service 검증
+        게시글 타입 : Admin
+        유저 타입 : Manager
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Admin").id
+        manager_user = UserModel.objects.get(username = "manager")
+        self.assertEqual(check_can_create_post(manager_user, post_type_id), True)
 
-def check_can_create_post(user : UserModel, post_type_id : int) -> bool:
-    """
-    create_post의 접근 권한을 담당하는 Service
-    Args:
-        user (UserModel): user.User 외래키 (request.user를 통해 로그인한 유저 반환)
-        post_type (int): posts.PostType 외래키 (urls에서 받아옴 1=공지, 2=운영, 3=자유)
-    Returns:
-        bool
-    """
-    user_type = define_user_type(user)
-    post_type = PostType.objects.get(id=post_type_id).post_type
-    if (
-        user_is_manager(user_type) 
-        or 
-        (user_is_general(user_type) and post_is_general(post_type))):
-        return True
-    return False
+    def test_check_can_create_post_when_general_user_get_notice_post(self):
+        """
+        게시판 POST 에 대한 권한을 체크하는 check_can_create_post Service 검증
+        게시글 타입 : Notice
+        유저 타입 : General
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Notice").id
+        general_user = UserModel.objects.get(username = "general")
+        self.assertEqual(check_can_create_post(general_user, post_type_id), False)
 
+    def test_check_can_create_post_when_manager_user_get_notice_post(self):
+        """
+        게시판 POST 에 대한 권한을 체크하는 check_can_create_post Service 검증
+        게시글 타입 : Notice
+        유저 타입 : Manager
+        """
+        post_type_id = PostTypeModel.objects.get(post_type="Notice").id
+        manager_user = UserModel.objects.get(username = "manager")
+        self.assertEqual(check_can_create_post(manager_user, post_type_id), True)
+
+    def test_check_can_create_post_with_incorrect_user_type_(self):
+        """
+        게시판 POST 에 대한 권한을 체크하는 check_can_create_post Service 검증
+        게시글 타입 : Notice
+        유저 타입 : Manager
+        """
+        false_user_type_list=["string", 12, 3.5, ""]
+        post = PostTypeModel.objects.get(post_type="General").id
+        for user in false_user_type_list:
+            with self.assertRaises(AttributeError):
+                check_can_create_post(user, post)
+    def test_check_can_create_post_with_incorrect_post_type_(self):
+        """
+        게시판 POST 에 대한 권한을 체크하는 check_can_create_post Service 검증
+        게시글 타입 : Notice
+        유저 타입 : Manager
+        """
+        false_post_type_list=["","string",3, 2+5j]
+        user = UserModel.objects.get(username = "general")
+        for item in false_post_type_list:
+            with self.assertRaises(AttributeError):
+                check_can_get_post(user, item)
 
 
