@@ -407,7 +407,7 @@ class TestPostPermission(TestCase):
         """
         
         user = UserModel.objects.get(username = "general")
-        post_obj = PostModel.object.get(user=user)
+        post_obj = PostModel.objects.get(user=user)
         post_id = post_obj.post_type.id
         self.assertEqual(check_can_delete_post(user, post_id), True)
 
@@ -418,7 +418,7 @@ class TestPostPermission(TestCase):
         유저 타입 : General
         """
         user = UserModel.objects.get(username = "general")
-        post_obj = PostModel.object.get(user_username="manager")
+        post_obj = PostModel.objects.get(user_username="manager")
         post_id = post_obj.post_type.id
         self.assertEqual(check_can_delete_post(user, post_id), False)
 
