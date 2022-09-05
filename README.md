@@ -78,7 +78,7 @@
 - 9PM TIL 링크 공유 및 하루의 마무리
 - PR 일괄 확인시에는 어떠한 작업에 대한 PR인지 간단한 설명 후 다른 팀원의 검토 진행
 
-### 📝 UniTest
+### 📝 Unit Test
 - Service Layer 구축
 - Service 에 대하여 예측가능한 Error를 Unitest진행
 - 결과가 나온 Error들을 Try, Execpt를 통한 핸들링
