@@ -9,10 +9,12 @@ class UserTypeSerializer(serializers.ModelSerializer):
         model = UserType
         fields = ["user_type"]
 
+
 class UserLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserLog
         fields = ["user", "login_date"]
+
 
 class UserSerializer(serializers.ModelSerializer):
     user_type = serializers.SerializerMethodField()
@@ -39,14 +41,12 @@ class UserSerializer(serializers.ModelSerializer):
             return obj.user_type.user_type
         return "None"
 
-
     class Meta:
         model = User
         fields = ["user_type", "username", "password", "gender",
-         "age", "phone", "joined_date"
-        ]
+                  "age", "phone", "joined_date"
+                  ]
 
         extra_kwargs = {
             'password': {'write_only': True}
         }
-

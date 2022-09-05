@@ -10,9 +10,11 @@ from user.Service.user_service import (
     user_post_service,
     user_update_service,
     user_delete_service,
-    )
+)
 
 # 유저 CRUD 기능
+
+
 class UserView(APIView):
     """
     User의 CRUD를 담당하는 View
@@ -38,18 +40,18 @@ class UserView(APIView):
 
         try:
             if user_update_service(user_obj, request.data):
-                return Response( {"detail": "회원정보 수정 성공"}, status=status.HTTP_200_OK)
-            return Response({"detail" : "현재 비밀번호가 옳바르지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"detail": "회원정보 수정 성공"}, status=status.HTTP_200_OK)
+            return Response({"detail": "현재 비밀번호가 옳바르지 않습니다."}, status=status.HTTP_400_BAD_REQUEST)
         except:
-            return Response({"detail" : "회원정보 수정에 실패했습니다."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "회원정보 수정에 실패했습니다."}, status=status.HTTP_400_BAD_REQUEST)
 
     # 회원탈퇴 기능
     def delete(self, request):
         user_obj = request.user
         if user_delete_service(user_obj):
-            return Response({"detail" : "회원 탈퇴 성공"}, status=status.HTTP_200_OK)
-        return Response({"detail" : "회원 탈퇴에 실패했습니다."}, status=status.HTTP_400_BAD_REQUEST)
-    
+            return Response({"detail": "회원 탈퇴 성공"}, status=status.HTTP_200_OK)
+        return Response({"detail": "회원 탈퇴에 실패했습니다."}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class TokenObtainPairView(TokenObtainPairView):
     """
@@ -57,4 +59,3 @@ class TokenObtainPairView(TokenObtainPairView):
     내부에서 UserLog를 생성하는 함수 내장
     """
     serializer_class = TokenObtainPairSerializer
-    

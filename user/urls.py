@@ -9,5 +9,3 @@ urlpatterns = [
     path("refresh", TokenRefreshView.as_view(), name="token_refresh"),
     path('<username>', views.UserView.as_view()),
 ]
-
-

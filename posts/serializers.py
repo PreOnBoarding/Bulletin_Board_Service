@@ -9,6 +9,7 @@ class PostSerializer(serializers.ModelSerializer):
         model = PostModel
         fields = "__all__"
 
+
 class PostUpdateLogSerializer(serializers.ModelSerializer):
 
     class Meta:
