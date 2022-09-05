@@ -338,8 +338,6 @@ class TestPostPermission(TestCase):
         general_user = UserModel.objects.get(username = "manager")
         self.assertEqual(check_can_update_post(general_user, post_type_id), False)
 
-##
-
     def test_check_can_delete_post_when_general_user_get_general_post(self):
         """
         게시판 Delete에 대한 권한을 체크하는 check_can_get_post Service 검증
