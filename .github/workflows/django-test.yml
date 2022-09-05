@@ -32,4 +32,3 @@ jobs:
         run: |
           python manage.py test posts/tests
           python manage.py test user/tests
-          python manage.py test statistic/tests
