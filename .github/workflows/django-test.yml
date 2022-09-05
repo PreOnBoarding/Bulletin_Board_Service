@@ -3,7 +3,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -32,3 +31,4 @@ jobs:
           SECRET_KEY: ${{secrets.SECRET_KEY}}
         run: |
           python manage.py test posts/tests
+          python manage.py test user/tests
