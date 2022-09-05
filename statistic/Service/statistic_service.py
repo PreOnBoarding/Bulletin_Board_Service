@@ -42,7 +42,7 @@ def get_logintime_statistics():
         접속 시간별 유저 수 통계 함수
 
     Return :
-        count_by_logintime (dict) : 나이구간별 유저 수
+        count_by_logintime (dict) : 접속 시간별 유저 수
     """
     count_by_logintime = dict()
     
