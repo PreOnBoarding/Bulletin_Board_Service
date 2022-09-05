@@ -1,5 +1,5 @@
 # Wayne_Hills_Ventures 기업과제
-## 👨‍👩‍👧 기술 스택
+## 💻 기술 스택
 <div style='flex'>
 <img src="https://img.shields.io/badge/Python3.9.5-3776AB?style=for-the-badge&logo=Python&logoColor=white" >
   <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=Django&logoColor=white">
