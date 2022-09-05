@@ -97,8 +97,12 @@
 
 ### 📝 Unit Test
 - Service Layer 구축
-- Service 에 대하여 예측가능한 Error를 Unitest진행
+- Service 에 대하여 예측가능한 Error를 Unittest진행
 - 결과가 나온 Error들을 Try, Execpt를 통한 핸들링
-- API에 대한 Unitest에서 제대로 Error에 대한 핸들링이 이루어 졌는가를 확인
+- API에 대한 Unittest에서 제대로 Error에 대한 핸들링이 이루어 졌는가를 확인
+
+### 🎇 배포 이미지
+![image](https://user-images.githubusercontent.com/101394490/188388015-a9acc980-ea25-4d02-97b5-0042814cd313.png)
+
 
 
