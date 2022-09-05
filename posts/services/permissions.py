@@ -52,9 +52,8 @@ def is_author(user, post_id)->bool:
     """
     유저가 게시물 작성자인가를 체크
     """
-    post_obj = PostModel.objects.get(id=post_id).post_type.post_type
+    post_obj = PostModel.objects.get(id=post_id)
     return bool(user==post_obj.user)
-
 
 def check_can_get_post(post_type_id : int, user : UserModel) -> bool:
     """
