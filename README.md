@@ -1,14 +1,63 @@
 # Wayne_Hills_Ventures 기업과제
+## 💻 기술 스택
+<div style='flex'>
+<img src="https://img.shields.io/badge/Python3.9.5-3776AB?style=for-the-badge&logo=Python&logoColor=white" >
+  <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=Django&logoColor=white">
+    <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=PostgreSQL&logoColor=white">
+    <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white">
+	<img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=for-the-badge&logo=Amazon EC2&logoColor=white">
+	<img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=for-the-badge&logo=Amazon RDS&logoColor=white">
+</div>
 
 ## 👨‍👩‍👧 작업 구성원
-- 고현우
-- 김동우
-- 윤슬기
-- 한예슬
-- 정대근
+- [고현우](https://khw7876.tistory.com/)
+- [김동우](https://velog.io/@kimphysicsman)
+- [윤슬기](https://nicesugi.tistory.com/)
+- [한예슬](https://velog.io/@tasha_han_1234)
 
-## 👉 ERD <br><br>
-![image](https://user-images.githubusercontent.com/68724828/187600194-20c59363-a958-4d1d-9a7f-fbf40075da14.png)
+## 📜 과제 분석
+
+- 서비스 정의
+  - MVP 서비스 : 유저가 게시판을 이용 <br>
+- User 등급 존재 (ex - 관리자, 운영자, 일반사용자) <br>
+- Post 타입 존재 (공지사항, 운영게시판, 자유게시판) <br>
+
+  <details>
+  <summary>공지 게시판</summary>
+  <div markdown="1">
+    - 조회 : 모두에게 <br>
+    - 작성 : 운영자 <br>
+    - 수정 : 운영자 <br>
+    - 삭제 : 운영자 <br>
+  </div>
+  </details>
+  <details>
+  <summary>운영 게시판</summary>
+  <div markdown="1">
+    - 조회 : 운영자 <br>
+    - 작성 : 운영자 <br>
+    - 수정 : 작성 운영자 <br>
+    - 삭제 : 작성 운영자 <br>
+  </div>
+  </details>
+  <details>
+  <summary>자유 게시판</summary>
+  <div markdown="1">
+    - 조회 : 모두에게 <br>
+    - 작성 : 가입이 된 사람 <br>
+    - 수정 : 작성자 <br>
+    - 삭제 : 작성자, 운영자 <br>
+  </div>
+  </details>
+- 통계 기능 (남/여,  나이별, 접속시간별 ⇒ 유저 모델에 포함)
+
+## 👉 ERD
+<img width="785" alt="스크린샷 2022-09-01 오후 10 44 18" src="https://user-images.githubusercontent.com/104303285/187929462-fdf80dd7-388c-414d-9b85-7a5371704ab1.png">
+</br>
+
+## 🙏 API
+![image](https://user-images.githubusercontent.com/101394490/188385702-2ea2a149-ec89-4506-a52e-d08c0d69f7f0.png)
+
 
 ## 📌 컨벤션
 ### ❓ Commit Message
@@ -28,6 +77,10 @@
 - Docstring을 활용하여 클래스와 함수단위에 설명을 적어주도록 하자.
 - input/output을 명시하여 문서 없이 코드만으로 어떠한 결과가 나오는지 알 수 있도록 하자.
 
+### ❓ Lint
+- autopep8 사용
+- github actions 작동시 lint with flake8적용
+
 ### 🚷 벼락치기의 규칙
 - 컨벤션 지키기
 - Commit 단위 지키기
@@ -36,4 +89,20 @@
 - 문제를 마주하여 트러블을 겪었다면, 어떻게 해결을 했는지 공유를 해주기
 - 각자의 작업을 미리 작성을 하여서 각자의 작업을 공유하기
 - 각자 맡은 기능의 브랜치에서 작업을 하며 PR을 올린다. PR은 본인 이외의 2인 이상에게 승인을 받아야 merge 가능
-- PR을 열심히 살펴봐주고 코멘트를 통하여 부족한부분 잡아주기 or 격려해주기
+### 🆕<new 규칙>
+- 9AM 모여서 각자의 할일 리스트 작성
+- 4PM 모여서 아침에 계획했던 결과확인, PR일괄 확인 및 작업내용 공유
+- 9PM TIL 링크 공유 및 하루의 마무리
+- PR 일괄 확인시에는 어떠한 작업에 대한 PR인지 간단한 설명 후 다른 팀원의 검토 진행
+
+### 📝 Unit Test
+- Service Layer 구축
+- Service 에 대하여 예측가능한 Error를 Unittest진행
+- 결과가 나온 Error들을 Try, Execpt를 통한 핸들링
+- API에 대한 Unittest에서 제대로 Error에 대한 핸들링이 이루어 졌는가를 확인
+
+### 🎇 배포 이미지
+![image](https://user-images.githubusercontent.com/101394490/188388015-a9acc980-ea25-4d02-97b5-0042814cd313.png)
+
+
+

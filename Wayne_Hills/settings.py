@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', "Wayne")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG",1))
 
-ALLOWED_HOSTS = ['15.164.93.44', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['15.164.93.44', '127.0.0.1', 'localhost', 'citistagram.com', 'www.citistagram.com']
 
 
 # Application definition
@@ -40,11 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
     'posts',
     'user',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -155,3 +157,41 @@ REST_FRAMEWORK = {
 
 
 AUTH_USER_MODEL = 'user.User'
+
+# CORS 설정
+CSRF_TRUSTED_ORIGINS = (
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "https://citistagram.com",
+    "https://www.citistagram.com",
+)
+
+CORS_ORIGIN_WHITELIST = (
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "https://citistagram.com",
+    "https://www.citistagram.com",
+)
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "access-control-allow-origin"
+]
