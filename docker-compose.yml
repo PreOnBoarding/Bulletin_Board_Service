@@ -4,10 +4,20 @@ services:
     build: ./nginx
     volumes:
       - static_volume:/django/static
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - app
+  
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+
   app:
     build: .
     volumes:
