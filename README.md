@@ -56,9 +56,13 @@
 </br>
 
 ## 🙏 API
-![image](https://user-images.githubusercontent.com/101394490/188385702-2ea2a149-ec89-4506-a52e-d08c0d69f7f0.png)
+<img width="912" alt="스크린샷 2022-09-06 오전 9 51 46" src="https://user-images.githubusercontent.com/104303285/188525114-30e4e9d0-0d01-4c83-802a-7874c6836e69.png">
+</br>
 
-
+## REQUEST 도큐먼트
+https://documenter.getpostman.com/view/20981400/VV4ryJhH
+</br>
+</br>
 ## 📌 컨벤션
 ### ❓ Commit Message
 - feat/ : 새로운 기능 추가/수정/삭제
@@ -102,7 +106,6 @@
 - API에 대한 Unittest에서 제대로 Error에 대한 핸들링이 이루어 졌는가를 확인
 
 ### 🎇 배포 이미지
-![image](https://user-images.githubusercontent.com/101394490/188388015-a9acc980-ea25-4d02-97b5-0042814cd313.png)
-
+<img width="963" alt="b1" src="https://user-images.githubusercontent.com/104303285/188524821-a964f346-ecfa-4240-966e-7d40d6a0253b.png">
 
 
